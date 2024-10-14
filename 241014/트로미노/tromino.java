@@ -39,7 +39,7 @@ public class Main {
         }
 
         for(int r=0; r<n; r++){
-            for(int c=0; c<m-3; c++){
+            for(int c=0; c<=m-3; c++){
                 MAX = Math.max(MAX, map[r][c] + map[r][c+1] + map[r][c+2]);                
             }
         }
