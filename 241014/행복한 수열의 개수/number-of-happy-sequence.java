@@ -23,20 +23,20 @@ public class Main {
 
         count = 0;
         for(int r=0; r < N; r++){
-            for(int c=0; c <= N-M; c++){
+            for(int c=0; c < N-M; c++){
                 
                 boolean used = false;
                 int check = 1;
-                for(int k=c; k<c+M-1; k++){
+                for(int k=c; k<=c+M-1; k++){
                     if (map[r][k] == map[r][k+1]){
                         check++;
                     } else {
                         check = 1;
-                        continue;
                     }
                     if (check >= M){
                         used = true;
                         count++;
+                        break;
                     }
                 }
 
@@ -45,16 +45,15 @@ public class Main {
         }
 
         for(int c=0; c < N; c++){
-            for(int r=0; r <= N-M; r++){
+            for(int r=0; r < N-M; r++){
 
                 boolean used = false;
                 int check = 1;
-                for(int k=r; k<r+M-1; k++){
+                for(int k=r; k<=r+M-1; k++){
                     if (map[k][c] == map[k+1][c]) {
                         check++;
                     } else {
                         check = 1;
-                        continue;
                     }
                     if (check >= M){
                         count++;
