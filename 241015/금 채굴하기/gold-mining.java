@@ -14,7 +14,7 @@ public class Main {
         m = Integer.parseInt(st.nextToken());
 
         map = new int[n][n];
-        total = Integer.MIN_VALUE;
+        total = 0;
         
         for(int i=0; i<n; i++){
             st = new StringTokenizer(br.readLine());
@@ -33,8 +33,8 @@ public class Main {
 
     private static void miningGold(int r, int c){
         
-        int K = 1;
-        while(K<=n){
+        int K = 0;
+        while(K<=n*n){
             int count = 0;
             for(int i=0; i<n; i++){
                 for(int j=0; j<n; j++){
@@ -44,7 +44,7 @@ public class Main {
                 }
             }
             int miningCost = (K * K) + (K+1) * (K+1);
-            if ((m*count) - miningCost >= 0){
+            if ((m*count) >= miningCost){
                 total = Math.max(total, count);
             }
             
