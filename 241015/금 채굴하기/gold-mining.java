@@ -34,7 +34,7 @@ public class Main {
     private static void miningGold(int r, int c){
         
         int K = 0;
-        while(K<=n*n){
+        while(K<=n){
             int count = 0;
             for(int i=0; i<n; i++){
                 for(int j=0; j<n; j++){
