@@ -55,7 +55,7 @@ public class Main {
     public static boolean inRange(int si, int sj, int ek, int el){
         for(int r=si; r<=ek ;r++){
             for(int c=sj; c<=el; c++){
-                if (grid[r][c] < 0) return false;
+                if (grid[r][c] <= 0) return false;
             }
         }
         return true;
