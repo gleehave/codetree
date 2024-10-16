@@ -48,7 +48,8 @@ public class Main {
             }
         }
 
-        System.out.println(maxCount);
+        if (maxCount>0) System.out.println(maxCount);
+        else System.out.println(-1);
     }
 
     public static boolean inRange(int si, int sj, int ek, int el){
