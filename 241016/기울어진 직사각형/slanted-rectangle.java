@@ -1,49 +1,56 @@
-import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int N;
-    static int total;
-    static int[][] map;
-    static int[] dr = {-1, -1, 1, 1};
-    static int[] dc = {1, 1, -1, -1};
 
-    public static void main(String[] args) throws Exception {
-        StringTokenizer st;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        st = new StringTokenizer(br.readLine());
+    public static final int DIR_NUM = 4;
+    public static final int MAX_N = 20;
 
-        N = Integer.parseInt(st.nextToken());
-        map = new int[N][N];
-        for(int i=0; i<N; i++){
-            st = new StringTokenizer(br.readLine());
-            for(int j=0; j<N; j++){
-                map[i][j] = Integer.parseInt(st.nextToken());
-            }
-        } // map 입력
+    public static int n;
+    public static int[][] grid = new int[MAX_N][MAX_N];
 
-        total = 0;
-        for(int r=0; r<N; r++){
-            for(int c=0; c<N; c++){
-                rectangle(r, c, r, c, map[r][c], 0);
-            }
-        }
-        System.out.println(total); 
+    public static boolean inRange(int x, int y){
+        return 0 <= x && x < n && 0 <= y && y < n;
     }
 
-    private static void rectangle(int startR, int startC, int nextR, int nextC, int score, int dir){
-        if (dir == 4) return;
-        if (nextR == startR && nextC == startC && dir == 3){
-            total = Math.max(total, score);
-            return;
+    public static int getScore(int x, int y, int k, int l){
+        int[] dx = new int[]{-1, -1, 1, 1};
+        int[] dy = new int[]{1, -1, -1, 1};
+        int[] moveNum = new int[]{k, l, k, l};
+
+        int sumOfNums = 0;
+
+        for(int d=0; d < DIR_NUM; d++){
+            for(int q=0; q < moveNum[d]; q++){
+                x += dx[d];
+                y += dy[d];
+
+                if (!inRange(x, y)) return 0;
+                sumOfNums += grid[x][y];
+            }
         }
+        return sumOfNums;
+    }
 
-        nextR += dr[dir];
-        nextC += dc[dir];
-        
-        if (nextR < 0 || nextC < 0 || nextR >= N || nextC >= N) return;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
 
-        rectangle(startR, startC, nextR, nextC, score+map[nextR][nextC], dir);
-        rectangle(startR, startC, nextR, nextC, score, dir+1);
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                grid[i][j] = sc.nextInt();
+            }
+        }
+        int ans = 0;
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                for(int k=1; k<n; k++){
+                    for(int l=1; l<n; l++){
+                        ans = Math.max(ans, getScore(i, j, k, l));
+                    }
+                }
+            }
+        }
+        System.out.print(ans);
     }
 }
