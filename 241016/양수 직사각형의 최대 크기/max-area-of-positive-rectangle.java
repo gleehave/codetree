@@ -39,7 +39,7 @@ public class Main {
                 for(int k=0; k<n; k++){
                     for(int l=0; l<m; l++){
                         if (inRange(i, j, k, l)){
-                            if (maxSum <= getGridSum(i, j, k, l)){
+                            if (maxSum < getGridSum(i, j, k, l)){
                                 maxCount = Math.max(maxCount, countingGrid(i, j, k, l));
                             }
                         }
