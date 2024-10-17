@@ -92,7 +92,7 @@ public class Main {
     }
 
     public static boolean isUp(int row){
-        if (row < 0) return false;
+        if (row < 1) return false;
         for(int i=0; i<m; i++){
             if (grid[row][i] == grid[row-1][i]) return true;
         }
