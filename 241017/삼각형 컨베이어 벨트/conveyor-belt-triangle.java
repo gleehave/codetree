@@ -15,29 +15,29 @@ public class Main {
         n = Integer.parseInt(st.nextToken());
         t = Integer.parseInt(st.nextToken());
 
-        leftSide = new int[3];
-        rightSide = new int[3];
-        bottomSide = new int[3];
+        leftSide = new int[n];
+        rightSide = new int[n];
+        bottomSide = new int[n];
 
         st = new StringTokenizer(br.readLine());
-        leftSide[0] = Integer.parseInt(st.nextToken());
-        leftSide[1] = Integer.parseInt(st.nextToken());
-        leftSide[2] = Integer.parseInt(st.nextToken());
+        for(int i=0; i<n; i++){
+            leftSide[i] = Integer.parseInt(st.nextToken()); 
+        }
 
         st = new StringTokenizer(br.readLine());
-        rightSide[0] = Integer.parseInt(st.nextToken());
-        rightSide[1] = Integer.parseInt(st.nextToken());
-        rightSide[2] = Integer.parseInt(st.nextToken());
+        for(int i=0; i<n; i++){
+            rightSide[i] = Integer.parseInt(st.nextToken()); 
+        }
 
         st = new StringTokenizer(br.readLine());
-        bottomSide[2] = Integer.parseInt(st.nextToken());
-        bottomSide[1] = Integer.parseInt(st.nextToken());
-        bottomSide[0] = Integer.parseInt(st.nextToken());
+        for(int i=n-1; i>=0; i--){
+            bottomSide[i] = Integer.parseInt(st.nextToken()); 
+        }
 
         while(t > 0){
             t--;
-            int tempLeft = leftSide[2];
-            int tempRight = rightSide[2];
+            int tempLeft = leftSide[n-1];
+            int tempRight = rightSide[n-1];
             int tempBottom = bottomSide[0];
 
             for(int i=n-1; i>0; i--){
