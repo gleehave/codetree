@@ -62,7 +62,9 @@ public class Main {
                     }
                     if (!isUp(current)) break;
                 }
-            } else if (isDown(row)){
+            } 
+            
+            if (isDown(row)){
                 int current = row;
                 String newDirection = direction;
                 while(current < n - 1){
@@ -98,8 +100,8 @@ public class Main {
     }
 
     public static boolean isDown(int row){
-        if (row >= n) return false;
-        
+        if (row >= n-1) return false;
+
         for(int i=0; i<m; i++){
             if (grid[row][i] == grid[row+1][i]) return true;
         }
