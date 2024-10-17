@@ -1,17 +1,3 @@
-/*
-
-r을 기준으로 r--는 위쪽, r++는 아래쪽으로 전파된다고 생각하자.
-
-1. L, R에 맞춰서 Shift
-2. r-1, r+1에서 같은 열에서 값이 1개라도 같은지 조건 체크
-    r-1: true -> r--; (d + 1) % 2;
-    r-1: false -> 스탑
-
-    r+1: true -> r++;
-    r+1: false -> 스탑
-*/
-
-
 import java.io.*;
 import java.util.*;
 
@@ -21,119 +7,105 @@ public class Main {
     static List<String[]> wind;
 
     public static void main(String[] args) throws Exception {
-        StringTokenizer st;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
+        // 입력 처리
         st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
         q = Integer.parseInt(st.nextToken());
 
         grid = new int[n][m];
-        for(int i=0; i<n; i++){
+        for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
-            for(int j=0; j<m; j++){
+            for (int j = 0; j < m; j++) {
                 grid[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-        
+
         wind = new ArrayList<>();
-        for(int i=0; i<q; i++){
+        for (int i = 0; i < q; i++) {
             wind.add(br.readLine().split(" "));
         }
 
-        for(int i=0; i<wind.size(); i++){
+        // 바람 처리
+        for (int i = 0; i < q; i++) {
             int row = Integer.parseInt(wind.get(i)[0]) - 1;
             String direction = wind.get(i)[1];
 
-            shift(row, direction);
+            shift(row, direction); // 바람에 의해 행 시프트
 
-            if (isUp(row)){
-                int current = row;
-                String newDirection = direction;
-                while(current >= 0){
-                    current--;
-                    if (newDirection.equals("L")){
-                        shift(current, "R");
-                        newDirection = "R";
-                    } else {
-                        shift(current, "L");
-                        newDirection = "R";
-                    }
-                    if (!isUp(current)) break;
-                }
-            } else if (isDown(row)){
-                int current = row;
-                String newDirection = direction;
-                while(current < n - 1){
-                    current++;
-                    if (newDirection.equals("L")){
-                        shift(current, "R");
-                        newDirection = "R";
-                    } else {
-                        shift(current, "L");
-                        newDirection = "L";
-                    }
-                    if (!isDown(current)) break;
-                }
-            }
+            // 위로 전파
+            propagateUp(row, direction);
 
-
+            // 아래로 전파
+            propagateDown(row, direction);
         }
 
-        for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
+        // 출력
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
                 System.out.print(grid[i][j] + " ");
             }
             System.out.println();
         }
     }
 
-    public static boolean isUp(int row){
-        if (row <= 0) return false; // 첫 번째 행은 위쪽을 볼 수 없음
-        for(int i = 0; i < m; i++){
-            if (grid[row][i] == grid[row - 1][i]) return true;
+    // 위쪽으로 전파
+    public static void propagateUp(int row, String direction) {
+        String newDirection = direction.equals("L") ? "R" : "L"; // 반대 방향으로 전파
+        int current = row;
+
+        while (current > 0) {
+            if (isSame(current, current - 1)) { // 위쪽 행과 비교
+                shift(current - 1, newDirection); // 반대 방향으로 시프트
+                current--; // 한 행 위로 이동
+                newDirection = newDirection.equals("L") ? "R" : "L"; // 다시 방향 바꿈
+            } else {
+                break; // 전파가 불가능하면 중단
+            }
+        }
+    }
+
+    // 아래쪽으로 전파
+    public static void propagateDown(int row, String direction) {
+        String newDirection = direction.equals("L") ? "R" : "L"; // 반대 방향으로 전파
+        int current = row;
+
+        while (current < n - 1) {
+            if (isSame(current, current + 1)) { // 아래쪽 행과 비교
+                shift(current + 1, newDirection); // 반대 방향으로 시프트
+                current++; // 한 행 아래로 이동
+                newDirection = newDirection.equals("L") ? "R" : "L"; // 다시 방향 바꿈
+            } else {
+                break; // 전파가 불가능하면 중단
+            }
+        }
+    }
+
+    // 같은 열에 같은 숫자가 존재하는지 확인
+    public static boolean isSame(int r1, int r2) {
+        for (int i = 0; i < m; i++) {
+            if (grid[r1][i] == grid[r2][i]) return true;
         }
         return false;
     }
 
-    public static boolean isDown(int row){
-        if (row >= n - 1) return false; // 마지막 행은 아래쪽을 볼 수 없음
-        for(int i = 0; i < m; i++){
-            if (grid[row][i] == grid[row + 1][i]) return true;
-        }
-        return false;
-    }
-
-
-    // public static boolean isUp(int row){
-    //     for(int i=0; i<m; i++){
-    //         if (grid[row][i] == grid[row-1][i]) return true;
-    //     }
-    //     return false;
-    // }
-
-    // public static boolean isDown(int row){
-    //     for(int i=0; i<m; i++){
-    //         if (grid[row][i] == grid[row+1][i]) return true;
-    //     }
-    //     return false;
-    // }
-
-    public static void shift(int row, String direction){
-        int temp = -1;
-        if (direction.equals("L")){
-            temp = grid[row][m-1];
-            for(int i=m-1; i>0; i--){
-                grid[row][i] = grid[row][i-1];
+    // 특정 행을 왼쪽 또는 오른쪽으로 한 칸씩 시프트
+    public static void shift(int row, String direction) {
+        if (direction.equals("L")) { // 왼쪽으로 시프트
+            int temp = grid[row][0];
+            for (int i = 0; i < m - 1; i++) {
+                grid[row][i] = grid[row][i + 1];
+            }
+            grid[row][m - 1] = temp;
+        } else { // 오른쪽으로 시프트
+            int temp = grid[row][m - 1];
+            for (int i = m - 1; i > 0; i--) {
+                grid[row][i] = grid[row][i - 1];
             }
             grid[row][0] = temp;
-        } else {
-            temp = grid[row][0];
-            for(int i=0; i<m-1; i++){
-                grid[row][i] = grid[row][i+1];
-            }
-            grid[row][m-1] = temp;
         }
     }
 }
