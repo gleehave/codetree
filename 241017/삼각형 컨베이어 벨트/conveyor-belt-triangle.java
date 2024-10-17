@@ -53,7 +53,7 @@ public class Main {
             for(int i=0; i<n-1; i++){
                 bottomSide[i] = bottomSide[i+1];
             }
-            bottomSide[2] = tempRight;
+            bottomSide[n-1] = tempRight;
         }
 
         StringBuilder builder = new StringBuilder();
