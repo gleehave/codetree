@@ -27,7 +27,7 @@ public class Main {
         for(int d=0; d<4; d++){
             int nr = r;
             int nc = c;
-            for(int move=0; move<grid[r][c]; move++){
+            for(int move=0; move<grid[r][c]-1; move++){
                 nr += dr[d];
                 nc += dc[d];
                 if (nr < 0 || nc < 0 || nr >= n || nc >= n) continue;
