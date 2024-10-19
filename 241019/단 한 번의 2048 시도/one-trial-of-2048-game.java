@@ -43,6 +43,10 @@ public class Main {
         }
     }
 
+    public static void sum(String direction){
+        return;
+    }
+
     public static void leftShift(){
         int[] temp;
         for(int r=0; r<4; r++){
