@@ -26,14 +26,13 @@ public class Main {
     }
 
     public static char[] rightShift(char[] data){
-        char[] shiftArr = Arrays.copyOfRange(data, 0, data.length);
         char temp = data[data.length-1];
         for(int i=data.length-1; i>0; i--){
-            shiftArr[i] = shiftArr[i-1];
+            data[i] = data[i-1];
         }
-        shiftArr[0] = temp;
+        data[0] = temp;
 
-        return shiftArr;
+        return data;
     }
 
     public static String compress(char[] shiftArr){
@@ -48,6 +47,15 @@ public class Main {
             }
         }
 
+        for(int i=0; i<alphabet.length; i++){
+            if (alphabet[i] > 0){
+                builder.append((char) (i + 'a')).append(alphabet[i]);
+            }
+        }
+
+        if (shiftArr[shiftArr.length-2] != shiftArr[shiftArr.length-1]){
+            builder.append(shiftArr[shiftArr.length-1]).append('1');
+        }
         return builder.toString();
     }
 }
