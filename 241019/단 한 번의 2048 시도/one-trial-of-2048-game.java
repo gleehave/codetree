@@ -61,7 +61,7 @@ public class Main {
                 if (grid[r][c] == grid[r-1][c]){
                     grid[r][c] += grid[r][c];
                     grid[r-1][c] = 0;
-                    c = c - 2;
+                    r = r - 2;
                 }
             }
         }
@@ -75,7 +75,7 @@ public class Main {
                 if (grid[r][c] == grid[r+1][c]){
                     grid[r][c] += grid[r][c];
                     grid[r+1][c] = 0;
-                    c = c + 2;
+                    r = r + 2;
                 }
             }
         }
