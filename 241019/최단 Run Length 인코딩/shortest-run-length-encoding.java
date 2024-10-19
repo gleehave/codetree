@@ -50,6 +50,11 @@ public class Main {
                 builder.append(shiftArr[i]).append(alphabet[shiftArr[i]-'a']);
                 Arrays.fill(alphabet, 0);
             }
+            if (i == shiftArr.length-2){
+                if (shiftArr[i] == shiftArr[i+1]){
+                    alphabet[shiftArr[i] - 'a']++;
+                }
+            }
         }
 
         for(int i=0; i<alphabet.length; i++){
