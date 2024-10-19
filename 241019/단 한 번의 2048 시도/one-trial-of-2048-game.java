@@ -25,21 +25,34 @@ public class Main {
         switch(direction){
             case "L":
                 leftShift();
-                sum("L");
+                //sum("L");
+                PRINT();
                 break;
             case "R":
-                sum("R");
                 rightShift();
+                //sum("R");
+                PRINT();
                 break;
             case "U":
-                sum("U");
                 upShift();
+                //sum("U");
+                PRINT();
                 break;
             case "D":
-                sum("D");
                 downShift();
+                // sum("D");
+                PRINT();                
                 break;
                                                 
+        }
+    }
+
+    public static void PRINT(){
+        for(int r=0; r<4; r++){
+            for(int c=0; c<4; c++){
+                System.out.print(grid[r][c]+" ");
+            }
+            System.out.println();
         }
     }
 
@@ -82,11 +95,11 @@ public class Main {
         for(int c=0; c<4; c++){
             int index = 0;
             temp = new int[4];
-            for(int r=3; r>=0; r--){
+            for(int r=0; r<4; r++){
                 if (grid[r][c] == 0) continue;
                 temp[index++] = grid[r][c];
             }
-            for(int r=3; r>=0; r--){
+            for(int r=0; r<4; r++){
                 grid[r][c] = temp[r];
             }
         }
@@ -97,7 +110,7 @@ public class Main {
         for(int c=0; c<4; c++){
             int index = 0;
             temp = new int[4];
-            for(int r=0; r<4; r++){
+            for(int r=3; r>=0; r--){
                 if (grid[r][c] == 0) continue;
                 temp[index++] = grid[r][c];
             }
