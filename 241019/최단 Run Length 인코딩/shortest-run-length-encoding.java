@@ -14,6 +14,11 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         char[] data = br.readLine().toCharArray();
 
+        if (data.length == 1){
+            System.out.println(2);
+            return;
+        }
+
         int min = Integer.MAX_VALUE;
         int shiftTime = 1;
         while(shiftTime <= data.length){
