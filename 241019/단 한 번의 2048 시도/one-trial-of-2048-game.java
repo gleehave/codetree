@@ -65,7 +65,7 @@ public class Main {
                 }
             }
         }
-        upShift();
+        downShift();
         return;
     }
 
