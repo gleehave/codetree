@@ -25,25 +25,24 @@ public class Main {
         switch(direction){
             case "L":
                 leftShift();
-                //sum("L");
+                leftSum();
                 PRINT();
                 break;
             case "R":
                 rightShift();
-                //sum("R");
+                rightSum();
                 PRINT();
                 break;
             case "U":
                 upShift();
-                //sum("U");
+                upShift();
                 PRINT();
                 break;
             case "D":
                 downShift();
-                // sum("D");
+                downSum();
                 PRINT();                
-                break;
-                                                
+                break;                       
         }
     }
 
@@ -56,7 +55,60 @@ public class Main {
         }
     }
 
-    public static void sum(String direction){
+    public static void downSum(){
+        for(int c=0; c<4; c++){
+            for(int r=3; r>0; r--){
+                if (grid[r][c] == grid[r-1][c]){
+                    grid[r][c] += grid[r][c];
+                    grid[r-1][c] = 0;
+                    c = c - 2;
+                }
+            }
+        }
+        upShift();
+        return;
+    }
+
+    public static void upSum(){
+        for(int c=0; c<4; c++){
+            for(int r=0; r<3; r++){
+                if (grid[r][c] == grid[r+1][c]){
+                    grid[r][c] += grid[r][c];
+                    grid[r+1][c] = 0;
+                    c = c + 2;
+                }
+            }
+        }
+        upShift();
+        return;
+    }
+
+    public static void leftSum(){
+        for(int r=0; r<4; r++){
+            for(int c=0; c<3; c++){
+                if (grid[r][c] == grid[r][c+1]){
+                    grid[r][c] += grid[r][c];
+                    grid[r][c+1] = 0;
+                    c = c + 2;
+                }
+            }
+        }
+        leftShift();
+        return;
+    }
+
+    public static void rightSum(){
+        
+        for(int r=0; r<4; r++){
+            for(int c=3; c>0; c--){
+                if (grid[r][c] == grid[r][c-1]){
+                    grid[r][c] += grid[r][c];
+                    grid[r][c-1] = 0;
+                    c = c-2;
+                }
+            }
+        }
+        rightShift();
         return;
     }
 
