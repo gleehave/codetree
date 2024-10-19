@@ -35,7 +35,7 @@ public class Main {
                 break;
             case "U":
                 upShift();
-                upShift();
+                upSum();
                 PRINT();
                 break;
             case "D":
