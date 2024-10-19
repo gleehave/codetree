@@ -25,9 +25,12 @@ public class Main {
         int c = Integer.parseInt(st.nextToken())-1;
 
         for(int d=0; d<4; d++){
+            int nr = r;
+            int nc = c;
             for(int move=0; move<grid[r][c]; move++){
-                int nr = r + dr[d];
-                int nc = c + dc[d];
+                nr += dr[d];
+                nc += dc[d];
+                if (nr < 0 || nc < 0 || nr >= n || nc >= n) continue;
                 grid[nr][nc] = 0;
             }
         }
