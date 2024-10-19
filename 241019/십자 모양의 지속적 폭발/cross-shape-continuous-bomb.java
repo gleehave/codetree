@@ -40,8 +40,9 @@ public class Main {
             for(int r=0; r<n; r++){
                 if (grid[r][drop] == 0) continue;
                 bomb(r, drop);
-                move();
+                break;
             }
+            move();
         }
 
         for(int r=0; r<n; r++){
