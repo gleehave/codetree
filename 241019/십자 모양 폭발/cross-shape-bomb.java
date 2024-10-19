@@ -25,7 +25,7 @@ public class Main {
         int c = Integer.parseInt(st.nextToken())-1;
 
         for(int d=0; d<4; d++){
-            for(int move=0; move<grid[r][c]-1; move++){
+            for(int move=0; move<grid[r][c]; move++){
                 int nr = r + dr[d];
                 int nc = c + dc[d];
                 grid[nr][nc] = 0;
