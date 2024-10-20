@@ -30,17 +30,13 @@ public class Main {
             }
         } // grid 입력
 
-        while(k-- > 0){
-            // 1.
+        while(k-- >= 0){
             bomb();
-
-            // 2.
             down();
-
-            // 3.
             rotate();
             down();
         }
+
         int total = 0;
         for(int r=0; r<n; r++){
             for(int c=0; c<n; c++){
