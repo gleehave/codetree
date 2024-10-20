@@ -31,8 +31,12 @@ public class Main {
         } // grid 입력
 
         while(k-- >= 0){
-            bomb();
-            down();
+
+            for(int i=0; i<n; i++){
+                bomb();
+                down();
+            }
+            
             rotate();
             down();
         }
