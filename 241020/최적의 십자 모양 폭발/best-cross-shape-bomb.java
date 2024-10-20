@@ -101,14 +101,4 @@ public class Main {
         }
         return map;
     }
-
-    public static void PRINT(int[][] map){
-        for(int r=0; r<n; r++){
-            for(int c=0; c<n; c++){
-                System.out.print(map[r][c]);
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
 }
