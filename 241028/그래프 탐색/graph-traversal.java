@@ -28,7 +28,7 @@ public class Main {
             graph[to].add(from);
         } // graph 완료
 
-        count = -1;
+        count = 0;
         solve(0); // 1번 정점 부터 시작
         System.out.println(count);
     }
