@@ -30,16 +30,15 @@ public class Main {
 
         count = 0;
         solve(0); // 1번 정점 부터 시작
-        System.out.println(count);
+        System.out.println(count-1);
     }
 
     public static void solve(int vertex){
-        
+        count++;
+        visited[vertex] = true;
         for(int i=0; i<graph[vertex].size(); i++){
             int now = graph[vertex].get(i);
             if (!visited[now]){
-                count++;
-                visited[now] = true;
                 solve(now);
             } 
         }
