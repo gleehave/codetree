@@ -1,48 +1,40 @@
-/*
-abcdef는 1~4의 값을 갖는다.
-우선순위는 모두 동일하다.
-
-앞에 -이면 무조건 1이다.
-+, * 이면 무조건 4이다.
-------
-
-*/
-
 import java.util.*;
-import java.io.*;
 
 public class Main {
-    static String operation;
-    static int[] alphabet;
+    static String str;
+    static int ans = Integer.MIN_VALUE;
 
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        operation = br.readLine();
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        str = sc.next();
+        int[] charToInt = new int[128];
 
-        alphabet = new int[6]; // a b c d e f
+        solve((int) 'a', charToInt);
+        System.out.println(ans);
+    }
 
-        for(int i=0; i<operation.length(); i++){
-            if (operation.charAt(i) == '-'){
-                alphabet[operation.charAt(i+1)-'a'] = 1;
+    private static void solve(int local, int[] charToInt) {
+        if(local == ((int) 'f') + 1) {
+            int num = charToInt[str.charAt(0)];
+
+            for(int i = 2; i < str.length(); i += 2) {
+                char temp = str.charAt(i - 1);
+                if(temp == '-') {
+                    num -= charToInt[str.charAt(i)];
+                } else if(temp == '+') {
+                    num += charToInt[str.charAt(i)];
+                } else {
+                    num *= charToInt[str.charAt(i)];
+                }
             }
+
+            ans = Math.max(ans, num);
+            return;
         }
 
-        for(int i=0; i<6; i++){
-            if (alphabet[i] == 1) continue;
-            alphabet[i] = 4;
+        for(int i = 1; i <= 4; i++) {
+            charToInt[local] = i;
+            solve(local + 1, charToInt);
         }
-
-        // 시작점
-        int result = alphabet[operation.charAt(0)-'a'];
-        for(int i=1; i<operation.length()-1; i++){
-            if (operation.charAt(i) == '-'){
-                result -= alphabet[operation.charAt(i+1) -'a'];
-            } else if (operation.charAt(i) == '+'){
-                result += alphabet[operation.charAt(i+1) - 'a'];
-            } else if (operation.charAt(i) == '*'){
-                result *= alphabet[operation.charAt(i+1) - 'a'];
-            }
-        }
-        System.out.println(result);
     }
 }
