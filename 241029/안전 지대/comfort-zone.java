@@ -32,7 +32,7 @@ public class Main {
         final_k = max_k;
         finalArea = Integer.MIN_VALUE;
         
-        while(max_k-- > 0){
+        while(max_k > 0){
             visited = new boolean[n][m];
             for(int i=0; i<n; i++){
                 for(int j=0; j<m; j++){
@@ -49,10 +49,11 @@ public class Main {
                 }
             }
 
-            if (safeArea > finalArea){
+            if (safeArea > finalArea ){
                 finalArea = safeArea;
                 final_k = max_k;
             }
+            max_k--;
         }
 
         System.out.println(final_k+" "+finalArea);
