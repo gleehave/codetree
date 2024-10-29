@@ -55,7 +55,7 @@ public class Main {
             }
         }
 
-        System.out.println(finalArea+" "+final_k);
+        System.out.println(final_k+" "+finalArea);
 
     } // main
 
