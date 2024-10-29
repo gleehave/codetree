@@ -48,7 +48,7 @@ public class Main {
             if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= m) continue;
 
             // 이미 방문했으면 제외
-            if (visited[nextR][nextC]) continue;
+            if (visited[nextR][nextC]) return;
 
             // 뱀이 있으면 제외
             if (grid[nextR][nextC] == 0) continue;
