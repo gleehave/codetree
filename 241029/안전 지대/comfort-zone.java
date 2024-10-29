@@ -49,7 +49,7 @@ public class Main {
                 }
             }
 
-            if (safeArea >= finalArea){
+            if (safeArea > finalArea){
                 finalArea = safeArea;
                 final_k = max_k;
             }
