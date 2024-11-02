@@ -25,6 +25,7 @@ public class Main {
             move[i] = Integer.parseInt(st.nextToken());
         }
 
+        score = new HashMap<>();
         result = Integer.MIN_VALUE;
         
         solve(0);
@@ -33,8 +34,6 @@ public class Main {
 
     public static void solve(int depth){
         if (depth == n){ // turn이 끝났다.
-
-            score = new HashMap<>();
             for(int i=1; i<=k; i++){
                // 현재 말 , 현재 위치 (1 ~ m)
                 score.put(i, score.getOrDefault(i, 0) + 1);
@@ -49,6 +48,7 @@ public class Main {
                 score.put(select.get(i), score.get(select.get(i)) + move[i]);
             }
             result = Math.max(result, count);
+            score.clear();
             return;
         }
 
