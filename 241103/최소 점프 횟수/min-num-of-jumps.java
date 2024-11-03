@@ -1,5 +1,3 @@
-package CT.simulation;
-
 /*
 2 3 1 1 4 에서 2는 1칸, 2칸 까지 가능한 것.
 */
