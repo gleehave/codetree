@@ -33,6 +33,9 @@ public class Main {
         }
 
         for(int i=current; i<=current+jump[current]; i++){
+            if (current > n){
+                return;
+            }
             System.out.println(i);
             // solve(i, move+1);
         }
