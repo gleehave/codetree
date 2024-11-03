@@ -49,7 +49,10 @@ public class Main {
                 int x2 = points[select.get(j)][0];
                 int y2 = points[select.get(j)][1];         
 
-                int dist = (int) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1-y2,2));
+                int x = Math.abs(x1 - x2) * Math.abs(x1 - x2);
+                int y = Math.abs(y1 - y2) * Math.abs(y1 - y2);
+
+                int dist = x + y;
                 min = Math.min(min, dist);
             }
         }
