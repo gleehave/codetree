@@ -1,3 +1,5 @@
+package CT.simulation;
+
 /*
 2 3 1 1 4 에서 2는 1칸, 2칸 까지 가능한 것.
 */
@@ -21,23 +23,22 @@ public class Main {
             jump[i] = Integer.parseInt(st.nextToken());
         }
 
-        min = -1;
+        min = Integer.MAX_VALUE;
         solve(0, 0);
-        System.out.println(min);
+        System.out.println(min == Integer.MAX_VALUE ? -1 : min);
     }
 
     public static void solve(int current, int move){
-        if (current == n){
+        if (current == n-1){
             min = Math.min(min, move);
             return;
         }
 
-        for(int i=current; i<=current+jump[current]; i++){
-            if (current > n){
-                return;
+        for(int i=current+1; i<=current+jump[current]; i++){
+            if (i >= n){
+                continue;
             }
-            System.out.println(i);
-            // solve(i, move+1);
+            solve(i, move+1);
         }
         
     }
