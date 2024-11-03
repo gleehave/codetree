@@ -20,9 +20,6 @@ public class Main {
     static List<Integer> coin = new ArrayList<>();
     static List<Integer> route = new ArrayList<>();
 
-    static int[] dr = {-1, 1, 0, 0};
-    static int[] dc = {0, 0, -1, 1};
-
     public static void main(String[] args) throws Exception {
         StringTokenizer st;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
