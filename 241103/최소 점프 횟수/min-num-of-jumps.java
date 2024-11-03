@@ -33,7 +33,8 @@ public class Main {
         }
 
         for(int i=current; i<=current+jump[current]; i++){
-            solve(i, move+1);
+            System.out.println(i);
+            // solve(i, move+1);
         }
         
     }
