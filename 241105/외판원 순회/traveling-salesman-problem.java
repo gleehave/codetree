@@ -22,25 +22,27 @@ public class Main {
 
         min = Integer.MAX_VALUE;
         visited = new boolean[n];
-        solve(0);
+        visited[0] = true; // 처음 시작부터 시작이다.
+        route.add(0);
+        solve(1);
         System.out.println(min);
     }
 
     public static void solve(int depth){
         if (depth == n){
             int sum = 0;
-
-            for(int i=1; i<route.size(); i++){
-                sum += grid[route.get(i-1)][route.get(i)];
+            for(int i=0; i<route.size()-1; i++){
+                sum += grid[route.get(i)][route.get(i+1)];
             }
-            sum += grid[route.get(route.size()-1)][route.get(0)];
+            sum += grid[route.get(route.size()-1)][0];
             min = Math.min(min, sum);
             return;
         }
 
         for(int i=0; i<n; i++){
+            if (grid[route.get(route.size()-1)][i] == 0) continue; // 이동불가
             if (visited[i]) continue; // 이미 방문
-            if (grid[depth][i] == 0) continue; // 이동불가
+
 
             visited[i] = true;
             route.add(i);
