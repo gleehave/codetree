@@ -30,9 +30,14 @@ public class Main {
 
     public static void solve(int depth){
         if (depth == n){
+            for(int i=0; i<route.size()-1; i++){
+                if (grid[route.get(i)][route.get(i+1)] == 0) return;              
+            }
+            if (grid[route.get(route.size()-1)][0] == 0) return;
+
             int sum = 0;
             for(int i=0; i<route.size()-1; i++){
-                sum += grid[route.get(i)][route.get(i+1)];
+                sum += grid[route.get(i)][route.get(i+1)];              
             }
             sum += grid[route.get(route.size()-1)][0];
             min = Math.min(min, sum);
