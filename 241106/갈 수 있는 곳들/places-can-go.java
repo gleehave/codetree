@@ -45,28 +45,28 @@ public class Main {
     }
 
     public static void bfs(){
-        Queue<int[]> queue = new LinkedList<>();
         count = 0;
-        
+        Queue<int[]> queue = new LinkedList<>();
+
         for(int i=0; i<location.size(); i++){
-            queue.offer(location.get(i)); // 시작점
-
-            while(!queue.isEmpty()){
-                int[] cur = queue.poll();
-
-                for(int d=0; d<4; d++){
-                    int nextR = cur[0] + dr[d];
-                    int nextC = cur[1] + dc[d];
-
-                    if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= n) continue;
-                    if (visited[nextR][nextC]) continue;
-                    if (grid[nextR][nextC] == 1) continue;
-
-                    visited[nextR][nextC] = true;
-                    queue.offer(new int[]{nextR, nextC});
-                    count++;
-                }
-            }
+            queue.offer(new int[]{location.get(i)[0], location.get(i)[1]});
         }
+
+        while(!queue.isEmpty()){
+            int[] cur = queue.poll();
+
+            for(int d=0; d<4; d++){
+                int nextR = cur[0] + dr[d];
+                int nextC = cur[1] + dc[d];
+
+                if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= n) continue;
+                if (visited[nextR][nextC]) continue;
+                if (grid[nextR][nextC] == 1) continue;
+
+                visited[nextR][nextC] = true;
+                queue.offer(new int[]{nextR, nextC});
+                count++;
+            }
+        }        
     }
 }
