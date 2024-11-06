@@ -37,8 +37,11 @@ public class Main {
             });
         }
 
-        bfs();
-        System.out.println(count);
+        if (n==1) System.out.println(1);
+        else {
+            bfs();
+            System.out.println(count);
+        }
     }
 
     public static void bfs(){
