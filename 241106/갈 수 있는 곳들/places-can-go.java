@@ -50,8 +50,6 @@ public class Main {
         
         for(int i=0; i<location.size(); i++){
             queue.offer(location.get(i)); // 시작점
-            
-            if (visited[location.get(i)[0]][location.get(i)[1]]) continue;
 
             while(!queue.isEmpty()){
                 int[] cur = queue.poll();
