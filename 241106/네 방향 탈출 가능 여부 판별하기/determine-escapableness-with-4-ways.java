@@ -29,10 +29,13 @@ public class Main {
             }
         } // grid
 
-        bfs();
+        
+        if (bfs()) System.out.println(1);
+        else System.out.println(0);
+        
     }
 
-    public static void bfs(){
+    public static boolean bfs(){
         queue = new LinkedList<>();
         queue.add(new int[]{0, 0});
         
@@ -44,16 +47,17 @@ public class Main {
                 int nextC = cur[1] + dc[d];
 
                 if (nextR == n-1 && nextC == m-1){
-                    System.out.println(1);
+                    return true;
                 }
 
                 if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= m) continue;
                 if (visited[nextR][nextC]) continue;
                 if (grid[nextR][nextC] == 0) continue;
 
+                visited[nextR][nextC] = true;
                 queue.add(new int[]{nextR, nextC});
             }
         }
-        System.out.println(0);
+        return false;
     }
 }
