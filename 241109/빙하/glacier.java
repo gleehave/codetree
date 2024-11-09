@@ -53,7 +53,7 @@ public class Main {
     }
 
     public static void simulate(){
-        int time = -1;
+        int time = 0;
         int lastSize = 0;
 
         while(!queue.isEmpty()){
@@ -100,6 +100,6 @@ public class Main {
                 }
             }
         }
-        System.out.println(time+" "+lastSize);
+        System.out.println(time-1+" "+lastSize);
     }
 }
