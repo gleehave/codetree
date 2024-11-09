@@ -8,20 +8,19 @@ public class Main {
     static boolean[][] visited;
     static int maxCities = 0;
 
-    static int[] dr = {-1, 1, 0, 0};
-    static int[] dc = {0, 0, -1, 1};
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
 
-    static List<Integer> cities = new ArrayList<>();
+    static List<Integer> selectedCities = new ArrayList<>();
 
-    public static void main(String[] args) throws Exception {
-        StringTokenizer st;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        k = Integer.parseInt(st.nextToken());
-        u = Integer.parseInt(st.nextToken());
-        d = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());  // 격자 크기
+        k = Integer.parseInt(st.nextToken());  // 고를 도시 수
+        u = Integer.parseInt(st.nextToken());  // 높이 차이 하한
+        d = Integer.parseInt(st.nextToken());  // 높이 차이 상한
 
         grid = new int[n][n];
         for (int i = 0; i < n; i++) {
@@ -31,102 +30,84 @@ public class Main {
             }
         }
 
+        visited = new boolean[n][n];
         selectCities(0, 0);
         System.out.println(maxCities);
     }
 
     // k개의 도시를 선택하는 조합 생성
-    public static void selectCities(int index, int cnt) {
-        if (cnt == k) {
-            maxCities = Math.max(maxCities, bfs());
+    public static void selectCities(int index, int depth) {
+        if (depth == k) {
+            initialize();  // 방문 배열 초기화
+            for (int city : selectedCities) {
+                int x = city / n;
+                int y = city % n;
+                if (!visited[x][y]) {
+                    bfs(x, y);
+                }
+            }
+            maxCities = Math.max(maxCities, getVisitedCount());  // 최대 방문 도시 수 갱신
             return;
         }
 
         if (index >= n * n) return;
 
-        // 현재 인덱스의 도시 선택
-        cities.add(index);
-        selectCities(index + 1, cnt + 1);
+        // 도시 선택
+        selectedCities.add(index);
+        selectCities(index + 1, depth + 1);
 
         // 선택 취소 후 다음 도시 선택
-        cities.remove(cities.size() - 1);
-        selectCities(index + 1, cnt);
+        selectedCities.remove(selectedCities.size() - 1);
+        selectCities(index + 1, depth);
     }
 
-    // 선택된 k개의 도시로부터 BFS 탐색
-    public static int bfs() {
-        int count = 0;
-        visited = new boolean[n][n];
+    // BFS 탐색
+    private static void bfs(int x, int y) {
         Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{x, y});
+        visited[x][y] = true;
 
-        // 선택된 k개의 시작 도시를 Queue에 추가
-        for (int city : cities) {
-            int r = city / n;
-            int c = city % n;
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int curX = current[0];
+            int curY = current[1];
+            int originHeight = grid[curX][curY];
 
-            if (!visited[r][c]) {
-                count++;
-                visited[r][c] = true;
-                queue.offer(new int[]{r, c});
+            for (int dir = 0; dir < 4; dir++) {
+                int nx = curX + dx[dir];
+                int ny = curY + dy[dir];
+
+                // 범위 내에 있으며, 방문하지 않았고, 높이 차이 조건을 만족하면 방문
+                if (inRange(nx, ny) && !visited[nx][ny]) {
+                    int heightDifference = Math.abs(grid[nx][ny] - originHeight);
+                    if (heightDifference >= u && heightDifference <= d) {
+                        visited[nx][ny] = true;
+                        queue.add(new int[]{nx, ny});
+                    }
+                }
             }
         }
+    }
 
-        // BFS 탐색 시작
-        while (!queue.isEmpty()) {
-            int[] cur = queue.poll();
-            int origin = grid[cur[0]][cur[1]];
+    // 방문 배열 초기화
+    private static void initialize() {
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(visited[i], false);
+        }
+    }
 
-            for(int[] loc: queue) System.out.println("loc: "+loc[0]+" "+loc[1]);
-            
-            for(int d=0; d<4; d++){
-                int nextR = cur[0] + dr[d];
-                int nextC = cur[1] + dc[d];
+    // 격자 범위 내 여부 확인
+    private static boolean inRange(int x, int y) {
+        return x >= 0 && x < n && y >= 0 && y < n;
+    }
 
-                if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= n) {
-                    continue;
-                }
-                
-                if (visited[nextR][nextC]) {
-                    continue;
-                }
-
-                int heightDifference = Math.abs(origin - grid[nextR][nextC]);
-                System.out.println("height: " + heightDifference);
-                        
-                if (heightDifference >= u && heightDifference <= d) {
-                    count++;
-                    visited[nextR][nextC] = true;
-                    queue.offer(new int[]{nextR, nextC});
-                }
-                System.out.println(nextR+" "+nextC);
+    // 방문한 도시 수 계산
+    private static int getVisitedCount() {
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (visited[i][j]) count++;
             }
-            System.out.println();
-
-            /*
-            for (int d = 0; d < 4; d++) {
-                int nextR = cur[0] + dr[d];
-                int nextC = cur[1] + dc[d];
-
-                // 격자 바깥 체크
-                if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= n) {
-                    continue;
-                }
-
-                // 이미 방문한 도시 체크
-                if (visited[nextR][nextC]) {
-                    continue;
-                }
-
-                int heightDifference = Math.abs(origin - grid[nextR][nextC]);
-
-                // u 이상 d 이하의 높이 차이 조건 확인
-                if (heightDifference >= u && heightDifference <= d) {
-                    count++;
-                    visited[nextR][nextC] = true;
-                    queue.offer(new int[]{nextR, nextC});
-                }
-            }
-            */
         }
         return count;
     }
