@@ -11,82 +11,85 @@ public class Main {
     static int[] dc = {0, 0, -1, 1};
 
     public static void main(String[] args) throws Exception {
-        StringTokenizer st;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
 
-        visited = new boolean[n][m];
         grid = new int[n][m];
-
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < m; j++) {
                 grid[i][j] = Integer.parseInt(st.nextToken());
-                if (i == 0 || j == 0 || i == n - 1 || j == m - 1) {
-                    visited[i][j] = true;
-                    queue.offer(new int[]{i, j});
-                }
             }
         }
 
-        // 외곽이 아닌 0인 부분을 초기화
-        for (int i = 1; i < n - 1; i++) {
-            for (int j = 1; j < m - 1; j++) {
-                if (grid[i][j] == 1) continue;
-                for (int d = 0; d < 4; d++) {
-                    int nextR = i + dr[d];
-                    int nextC = j + dc[d];
-                    if (grid[nextR][nextC] == 0) {
-                        visited[i][j] = true;
-                        queue.offer(new int[]{i, j});
-                        break;
-                    }
-                }
-            }
-        }
-        simulate();
-    }
-
-    public static void simulate() {
         int time = 0;
         int lastSize = 0;
 
-        while (!queue.isEmpty()) {
-            lastSize = 0;
-            int currSize = queue.size();
-            lastSize = currSize;
+        while (true) {
+            visited = new boolean[n][m];
+            queue = new LinkedList<>();
 
-            for (int i = 0; i < currSize; i++) {
+            // 외부 공기 영역 설정 (바깥 테두리)
+            queue.offer(new int[]{0, 0});
+            visited[0][0] = true;
+
+            // 외부와 연결된 물 찾기
+            while (!queue.isEmpty()) {
                 int[] cur = queue.poll();
+                int r = cur[0], c = cur[1];
 
                 for (int d = 0; d < 4; d++) {
-                    int nextR = cur[0] + dr[d];
-                    int nextC = cur[1] + dc[d];
+                    int nextR = r + dr[d];
+                    int nextC = c + dc[d];
 
                     if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= m) continue;
                     if (visited[nextR][nextC]) continue;
-
-                    if (grid[nextR][nextC] == 1) {
-                        grid[nextR][nextC] = 0;
-                        visited[nextR][nextC] = true;
+                    if (grid[nextR][nextC] == 0) {
                         queue.offer(new int[]{nextR, nextC});
+                        visited[nextR][nextC] = true;
                     }
                 }
             }
-            // 현재 남아 있는 1의 개수 계산
-            // for (int k = 0; k < n; k++) {
-            //     for (int z = 0; z < m; z++) {
-            //         if (grid[k][z] == 1 && !visited[k][z]) lastSize++;
-            //     }
-            // }
-            // System.out.println("lastSize: "+lastSize);
+
+            // 외부와 닿아있는 빙하 녹이기
+            List<int[]> meltList = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if (grid[i][j] == 1 && isExposedToWater(i, j)) {
+                        meltList.add(new int[]{i, j});
+                    }
+                }
+            }
+
+            // 빙하가 더 이상 없으면 종료
+            if (meltList.isEmpty()) {
+                System.out.println(time + " "+ lastSize);
+                break;
+            }
+
+            // 현재 시간에 녹은 빙하의 개수 저장
+            lastSize = meltList.size();
+
+            // 빙하 녹이기
+            for (int[] pos : meltList) {
+                grid[pos[0]][pos[1]] = 0;
+            }
 
             time++;
         }
+    }
 
-        System.out.println((time - 1) + " " + lastSize);
+    // 해당 빙하가 외부와 닿아있는지 확인
+    public static boolean isExposedToWater(int r, int c) {
+        for (int d = 0; d < 4; d++) {
+            int nextR = r + dr[d];
+            int nextC = c + dc[d];
+            if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= m) continue;
+            if (visited[nextR][nextC]) return true;
+        }
+        return false;
     }
 }
