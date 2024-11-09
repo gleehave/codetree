@@ -57,13 +57,7 @@ public class Main {
         while (!queue.isEmpty()) {
             lastSize = 0;
             int currSize = queue.size();
-
-            // 현재 남아 있는 1의 개수 계산
-            for (int k = 0; k < n; k++) {
-                for (int z = 0; z < m; z++) {
-                    if (grid[k][z] == 1 && !visited[k][z]) lastSize++;
-                }
-            }
+            lastSize = currSize;
 
             for (int i = 0; i < currSize; i++) {
                 int[] cur = queue.poll();
@@ -82,6 +76,14 @@ public class Main {
                     }
                 }
             }
+            // 현재 남아 있는 1의 개수 계산
+            // for (int k = 0; k < n; k++) {
+            //     for (int z = 0; z < m; z++) {
+            //         if (grid[k][z] == 1 && !visited[k][z]) lastSize++;
+            //     }
+            // }
+            // System.out.println("lastSize: "+lastSize);
+
             time++;
         }
 
