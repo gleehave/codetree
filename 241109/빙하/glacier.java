@@ -21,85 +21,70 @@ public class Main {
         visited = new boolean[n][m];
         grid = new int[n][m];
 
-        for(int i=0; i<n; i++){
+        for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
-            for(int j=0; j<m; j++){
+            for (int j = 0; j < m; j++) {
                 grid[i][j] = Integer.parseInt(st.nextToken());
-                if (i==0 || j==0 || i==n-1 || j == m-1){
+                if (i == 0 || j == 0 || i == n - 1 || j == m - 1) {
                     visited[i][j] = true;
                     queue.offer(new int[]{i, j});
-                } 
+                }
             }
-        } // grid 
+        }
 
-        for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
-                if (i==0 || j==0 || i==n-1 || j == m-1) continue;
+        // 외곽이 아닌 0인 부분을 초기화
+        for (int i = 1; i < n - 1; i++) {
+            for (int j = 1; j < m - 1; j++) {
                 if (grid[i][j] == 1) continue;
-
-                for(int d=0; d<4; d++){
+                for (int d = 0; d < 4; d++) {
                     int nextR = i + dr[d];
                     int nextC = j + dc[d];
-
-                    if (grid[nextR][nextC] == 0){
+                    if (grid[nextR][nextC] == 0) {
                         visited[i][j] = true;
                         queue.offer(new int[]{i, j});
                         break;
-                    } 
+                    }
                 }
             }
         }
         simulate();
     }
 
-    public static void simulate(){
+    public static void simulate() {
         int time = 0;
         int lastSize = 0;
 
-        while(!queue.isEmpty()){
-            time++;
+        while (!queue.isEmpty()) {
+            lastSize = 0;
             int currSize = queue.size();
-            lastSize = currSize;
 
-            for(int i=0; i<currSize; i++){
+            // 현재 남아 있는 1의 개수 계산
+            for (int k = 0; k < n; k++) {
+                for (int z = 0; z < m; z++) {
+                    if (grid[k][z] == 1 && !visited[k][z]) lastSize++;
+                }
+            }
+
+            for (int i = 0; i < currSize; i++) {
                 int[] cur = queue.poll();
 
-                for(int d=0; d<4; d++){
+                for (int d = 0; d < 4; d++) {
                     int nextR = cur[0] + dr[d];
                     int nextC = cur[1] + dc[d];
 
-                    if (nextR < 0 || nextC < 0 || nextR >=n || nextC >= m){
-                        continue;
-                    }
-                    if (visited[nextR][nextC]){
-                        continue;
-                    }
+                    if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= m) continue;
+                    if (visited[nextR][nextC]) continue;
 
-                    grid[nextR][nextC] = 0;
-                    visited[nextR][nextC] = true;
-                    queue.offer(new int[]{nextR, nextC});
-                }
-            }
-
-            for(int r=0; r<n; r++){
-                for(int c=0; c<m; c++){
-                   if (r==0 || c==0 || r==n-1 || c == m-1) continue;
-                   if (grid[r][c] == 1) continue;
-
-                   for(int d=0; d<4; d++){
-                       int nextR = r + dr[d];
-                       int nextC = c + dc[d];
-
-                       if (visited[r][c]) continue;
-                        if (grid[nextR][nextC] == 0){
-                            visited[r][c] = true;
-                            queue.offer(new int[]{r, c});
-                            break;
-                        } 
+                    if (grid[nextR][nextC] == 1) {
+                        grid[nextR][nextC] = 0;
+                        visited[nextR][nextC] = true;
+                        queue.offer(new int[]{nextR, nextC});
                     }
                 }
             }
+            time++;
         }
-        System.out.println(time-1+" "+lastSize);
+
+        System.out.println((time - 1) + " " + lastSize);
     }
 }
