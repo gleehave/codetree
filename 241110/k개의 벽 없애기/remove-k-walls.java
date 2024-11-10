@@ -76,7 +76,9 @@ public class Main {
                 int nextC = cur[1] + dc[d];
 
                 if (nextR == endR && nextC == endC){
-                    return cur[2]+1;
+                    initGrid();
+                    int answer = cur[2]+1;
+                    return answer;
                 }
 
                 if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= n) continue;
