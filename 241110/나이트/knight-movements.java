@@ -22,7 +22,8 @@ public class Main {
         endR = Integer.parseInt(st.nextToken())-1;
         endC = Integer.parseInt(st.nextToken())-1;
 
-        System.out.println(simulate());
+        if (n == 1) System.out.println(0);
+        else System.out.println(simulate());   
     }
 
     public static int simulate(){
