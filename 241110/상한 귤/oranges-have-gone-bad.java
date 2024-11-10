@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int n;
+    static int n, k;
     static int[][] grid;
     static int[][] step;
     static boolean[][] visited;
@@ -12,74 +12,67 @@ public class Main {
     static Queue<int[]> queue = new LinkedList<>();
 
     public static void main(String[] args) throws Exception {
+        StringTokenizer st;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
 
+        st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
 
         visited = new boolean[n][n];
         grid = new int[n][n];
         step = new int[n][n];
-        
-        for(int i = 0; i < n; i++){
+        for(int i=0; i<n; i++){
             st = new StringTokenizer(br.readLine());
-            for(int j = 0; j < n; j++){
+            for(int j=0; j<n; j++){
                 grid[i][j] = Integer.parseInt(st.nextToken());
-                
-                if (grid[i][j] == 2) {  // 상한 귤인 경우
-                    queue.offer(new int[]{i, j, 0});  // 초기 위치와 시간 0을 함께 저장
+
+                if (grid[i][j] == 2){
+                    queue.offer(new int[]{i, j, 0});                    
                     visited[i][j] = true;
                 } 
-                if (grid[i][j] == 0) step[i][j] = -1;  // 빈 칸일 경우 -1로 설정
+
+                if (grid[i][j] == 0){
+                    visited[i][j] = true;
+                    step[i][j] = -1;
+                } 
             }
-        }
+        } // grid 입력
 
         solve();
-
-        for(int r = 0; r < n; r++){
-            for(int c = 0; c < n; c++){
-                System.out.print(step[r][c] + " ");
+        
+        for(int r=0; r<n; r++){
+            for(int c=0; c<n; c++){
+                if (!visited[r][c]) step[r][c] = -2;
+            }
+        }
+        
+        for(int r=0; r<n; r++){
+            for(int c=0; c<n; c++){
+                System.out.print(step[r][c]+" ");
             }
             System.out.println();
-        }
+        }    
     }
 
     public static void solve(){
+
         while(!queue.isEmpty()){
-            int[] cur = queue.poll();
-            int curR = cur[0];
-            int curC = cur[1];
-            int time = cur[2];
-            step[curR][curC] = time;
+            int curSize = queue.size();
 
-            for(int d = 0; d < 4; d++){
-                int nextR = curR + dr[d];
-                int nextC = curC + dc[d];
+            for(int i=0; i<curSize; i++){
+                int[] cur = queue.poll();
+                for(int d=0; d<4; d++){
+                    int nextR = cur[0] + dr[d];
+                    int nextC = cur[1] + dc[d];
 
-                if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= n) continue;
-                if (visited[nextR][nextC] || grid[nextR][nextC] == 0 || grid[nextR][nextC] == 2) continue;
+                    if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= n) continue;
+                    if (visited[nextR][nextC]) continue;
+                    if (grid[nextR][nextC] == 0 || grid[nextR][nextC] == 2) continue;
 
-                visited[nextR][nextC] = true;
-                queue.offer(new int[]{nextR, nextC, time + 1});  // 시간 증가
-            }
-        }
-
-        // 초기 상태에서 주변에 상한 귤이 없어 영원히 상할 수 없는 귤을 -2로 표시
-        for(int r = 0; r < n; r++){
-            for(int c = 0; c < n; c++){
-                if (grid[r][c] == 1 && step[r][c] == 0) {  // 상할 수 없는 귤
-                    boolean isIsolated = true;
-                    for(int d = 0; d < 4; d++){
-                        int nextR = r + dr[d];
-                        int nextC = c + dc[d];
-
-                        if (nextR < 0 || nextC < 0 || nextR >= n || nextC >= n) continue;
-                        if (grid[nextR][nextC] != 0) {
-                            isIsolated = false;
-                            break;
-                        }
-                    }
-                    if (isIsolated) step[r][c] = -2;
+                    visited[nextR][nextC] = true;
+                    queue.offer(new int[]{nextR, nextC, cur[2] + 1});
+                    step[nextR][nextC] = cur[2]+1;
                 }
             }
         }
