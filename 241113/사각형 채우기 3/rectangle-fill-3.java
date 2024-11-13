@@ -1,32 +1,38 @@
-import java.util.Scanner;
+/*
+memo[1] = 2
+memo[2] = 7
+memo[3] = memo[2] * 2 = memo[n-1] * 2
+memo[4] = memo[n-2] * 2 + memo[n-2] 
+
+*/
+
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static final int MOD = 1000000007;
-    public static final int MAX_N = 1000;
-    
-    // 변수 선언
-    public static int n;
-    
-    public static long[] dp = new long[MAX_N + 1];
+    static int n;
+    static int[] memo;
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        // 입력:
-        n = sc.nextInt();
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(br.readLine());
 
-        // 초기 조건 설정
-        dp[0] = 1;
-        dp[1] = 2;
+        memo = new int[n+1];
 
-        // 점화식에 따라 dp값 채우기
-        // dp[i] = dp[i - 1] * 2 + dp[i - 2] * 3 +
-        //         (dp[i - 3] + dp[i - 4] + dp[i - 5] + ... dp[0]) * 2
-        for(int i = 2; i <= n; i++) {
-            dp[i] = (dp[i - 1] * 2 + dp[i - 2] * 3) % MOD;
-            for(int j = i - 3; j >= 0; j--)
-                dp[i] = (dp[i] + dp[j] * 2) % MOD;
+        if (n == 1){
+            System.out.println(2);
+        } else if (n==2){
+            System.out.println(7);
+        } else {
+            memo[1] = 2;
+            memo[2] = 7;
+
+            for(int i=3; i<=n; i++){
+                if (i % 2 != 0) memo[i] = (memo[i-1] % 1000000007)* 2;
+                memo[i] = (memo[i-2] * 2 + memo[i-2]) % 1000000007;
+            }
+            System.out.println(memo[n]);
         }
-        
-        System.out.print(dp[n]);
+
     }
 }
