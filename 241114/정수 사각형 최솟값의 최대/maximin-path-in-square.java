@@ -1,55 +1,43 @@
-import java.io.*;
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
+    public static final int MAX_NUM = 1000;
+    
+    public static int n;
+    public static int[][] num = new int[MAX_NUM][MAX_NUM];
+    public static int[][] dp = new int[MAX_NUM][MAX_NUM];
+    
+    public static void initialize() {
+        // 시작점의 경우 dp[0][0] = num[0][0]으로 초기값을 설정해줍니다
+        dp[0][0] = num[0][0];
+    
+        // 최좌측 열의 초기값을 설정해줍니다.
+        for(int i = 1; i < n; i++)
+            dp[i][0] = Math.min(dp[i-1][0], num[i][0]);
+    
+        // 최상단 행의 초기값을 설정해줍니다.
+        for(int j = 1; j < n; j++)
+            dp[0][j] = Math.min(dp[0][j-1], num[0][j]);
+    }
 
-    static int n;
-    static int[][] grid;
-    static int[][] memo;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
 
-    public static void main(String[] args) throws Exception {
-        StringTokenizer st;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < n; j++)
+                num[i][j] = sc.nextInt();
 
-        n = Integer.parseInt(br.readLine());
-        
-        memo = new int[n][n];
-        grid = new int[n][n];
-        for(int i=0; i<n; i++){
-            st = new StringTokenizer(br.readLine());
-            for(int j=0; j<n; j++){
-                grid[i][j] = Integer.parseInt(st.nextToken());
-            }
-        } // grid
+        // 초기값 설정
+        initialize();
 
-        if (n==1){
-            System.out.println(grid[0][0]);
-        } else {
+        // 탐색하는 위치의 위에 값과 좌측 값 중에 큰 값과
+        // 해당 위치의 숫자 중에 최솟값을 구해줍니다.
+        for(int i = 1; i < n; i++)
+            for(int j = 1; j < n; j++)
+                dp[i][j] = Math.min(Math.max(dp[i-1][j], dp[i][j-1]), num[i][j]);
 
-            memo[0][0] = grid[0][0];
-            for(int c=1; c<n; c++){
-                memo[0][c] = Math.min(memo[0][c-1], grid[0][c]);
-            }
 
-            for(int r=1; r<n; r++){
-                memo[r][n-1] = Math.min(memo[r-1][n-1], grid[r][n-1]);                
-            }
-
-            for(int r=1; r<n; r++){
-                memo[r][0] = Math.min(memo[r-1][0], grid[r][0]);
-            }
-
-            for(int c=1; c<n; c++){
-                memo[n-1][c] = Math.min(memo[n-1][c-1], grid[n-1][c]);
-            }
-
-            for(int r=1; r<n-1; r++){
-                for(int c=1; c<n-1; c++){
-                    memo[r][c] = Math.min(memo[r-1][c], memo[r][c-1]);
-                }
-            }
-
-            System.out.println(Math.min(grid[n-1][n-1], Math.max(memo[n-2][n-2], Math.max(memo[n-2][n-1], memo[n-1][n-2]))));
-        }
+        System.out.print(dp[n-1][n-1]);
     }
 }
