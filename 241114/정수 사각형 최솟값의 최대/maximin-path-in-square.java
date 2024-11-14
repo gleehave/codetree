@@ -40,7 +40,9 @@ public class Main {
                 }
             }
 
-            System.out.println(Math.max(memo[n-2][n-1], memo[n-1][n-2]));
+
+
+            System.out.println(Math.min(grid[n-1][n-1], Math.max(memo[n-2][n-1], memo[n-1][n-2])));
         }
     }
 }
