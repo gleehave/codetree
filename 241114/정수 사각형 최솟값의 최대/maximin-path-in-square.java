@@ -27,11 +27,11 @@ public class Main {
         } else {
             memo[0][0] = grid[0][0];
             for(int c=1; c<n; c++){
-                memo[0][c] = Math.min(grid[0][c-1], grid[0][c]);
+                memo[0][c] = Math.max(grid[0][c-1], grid[0][c]);
             }
 
             for(int r=1; r<n; r++){
-                memo[r][0] = Math.min(grid[r-1][0], grid[r][0]);
+                memo[r][0] = Math.max(grid[r-1][0], grid[r][0]);
             }
 
             for(int r=1; r<n; r++){
@@ -40,9 +40,14 @@ public class Main {
                 }
             }
 
-
-
             System.out.println(Math.min(grid[n-1][n-1], Math.max(memo[n-2][n-1], memo[n-1][n-2])));
+
+            // for(int k=0; k<n; k++){
+            //     for(int z=0; z<n; z++){
+            //         System.out.print(memo[k][z]+" ");
+            //     }
+            //     System.out.println();
+            // }
         }
     }
 }
