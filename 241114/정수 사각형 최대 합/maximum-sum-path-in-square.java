@@ -22,6 +22,19 @@ public class Main {
         }
 
         memo[0][0] = grid[0][0];
-        
+        for(int c=1; c<n; c++){
+            memo[0][c] = memo[0][c-1] + grid[0][c];
+        }
+
+        for(int r=1; r<n; r++){
+            memo[r][0] = memo[r-1][0] + grid[r][0];
+        }
+
+        for(int r=1; r<n; r++){
+            for(int c=1; c<n; c++){
+                memo[r][c] = Math.max(grid[r][c] + memo[r-1][c], grid[r][c] + memo[r][c-1]);
+            }
+        }
+        System.out.print(memo[n-1][n-1]);
     }
 }
