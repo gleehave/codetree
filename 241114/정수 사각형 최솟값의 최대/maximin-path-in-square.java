@@ -31,7 +31,7 @@ public class Main {
             }
 
             for(int r=1; r<n; r++){
-                memo[r][n-1] = Math.min(grid[r-1][n-1], grid[r][n-1]);                
+                memo[r][n-1] = Math.min(memo[r-1][n-1], grid[r][n-1]);                
             }
 
             for(int r=1; r<n; r++){
@@ -39,7 +39,7 @@ public class Main {
             }
 
             for(int c=1; c<n; c++){
-                memo[n-1][c] = Math.min(grid[n-1][c-1], grid[n-1][c]);
+                memo[n-1][c] = Math.min(memo[n-1][c-1], grid[n-1][c]);
             }
 
             for(int r=1; r<n-1; r++){
@@ -47,6 +47,9 @@ public class Main {
                     memo[r][c] = Math.min(memo[r-1][c], memo[r][c-1]);
                 }
             }
+
+
+
             System.out.println(Math.min(grid[n-1][n-1], Math.max(memo[n-2][n-2], Math.max(memo[n-2][n-1], memo[n-1][n-2]))));
         }
     }
