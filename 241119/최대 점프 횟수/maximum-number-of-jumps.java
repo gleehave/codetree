@@ -17,11 +17,13 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         for(int i=0; i<n; i++){
             arr[i] = Integer.parseInt(st.nextToken());
+            dp[i] = Integer.MIN_VALUE;
         } // arr
 
+        dp[0] = 0;
         for(int i=1; i<n; i++){
             for(int j=0; j<i; j++){
-                if (j+arr[j] < i) break;
+                if (dp[j] == Integer.MIN_VALUE) continue;
 
                 if (j + arr[j] >= i){
                     dp[i] = Math.max(dp[j]+1, dp[i]);
@@ -30,8 +32,7 @@ public class Main {
         }
 
         int max = Integer.MIN_VALUE;
-        for(int num : dp) max = Math.max(max, num);
-        
+        for(int n: dp) max = Math.max(max, n);
         System.out.println(max);
     }
 }
