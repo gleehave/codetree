@@ -21,12 +21,17 @@ public class Main {
 
         for(int i=1; i<n; i++){
             for(int j=0; j<i; j++){
+                if (j+arr[j] < i) break;
+
                 if (j + arr[j] >= i){
                     dp[i] = Math.max(dp[j]+1, dp[i]);
                 }
             }
         }
 
-        System.out.println(dp[n-1]);
+        int max = Integer.MIN_VALUE;
+        for(int num : dp) max = Math.max(max, num);
+        
+        System.out.println(max);
     }
 }
