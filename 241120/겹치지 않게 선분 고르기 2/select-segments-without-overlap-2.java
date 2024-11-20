@@ -37,9 +37,6 @@ public class Main {
         }
 
         Arrays.sort(arr);
-        for(Pair p : arr){
-            System.out.println(p.x1 +" "+p.x2);
-        }
         
         dp = new int[1000];
         Arrays.fill(dp, Integer.MIN_VALUE);
