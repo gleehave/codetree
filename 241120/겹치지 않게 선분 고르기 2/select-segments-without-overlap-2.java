@@ -11,8 +11,7 @@ class Pair implements Comparable<Pair>{
 
     @Override
     public int compareTo(Pair p){
-        if (x1 == p.x1) return this.x2 - p.x2;
-        return this.x1 - p.x1; 
+        return this.x2 - p.x2; 
     }
 }
 
@@ -38,6 +37,9 @@ public class Main {
         }
 
         Arrays.sort(arr);
+        for(Pair p : arr){
+            System.out.println(p.x1 +" "+p.x2);
+        }
         
         dp = new int[1000];
         Arrays.fill(dp, Integer.MIN_VALUE);
@@ -61,6 +63,6 @@ public class Main {
     }
 
     static boolean inRange(int x1, int x2, int nx1, int nx2) {
-        return x2 <= nx1 || nx2 <= x1;
+        return x2 < nx1 || nx2 < x1;
     }    
 }
