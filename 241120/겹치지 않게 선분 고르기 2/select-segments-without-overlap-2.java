@@ -52,7 +52,7 @@ public class Main {
                 }
             }
         }
-        
+
         int max = Integer.MIN_VALUE;
         for(int i=0; i<dp.length; i++){
             max = Math.max(max, dp[i]);
@@ -61,6 +61,6 @@ public class Main {
     }
 
     static boolean inRange(int x1, int x2, int nx1, int nx2) {
-        return x2 < nx1 || nx2 < x1;
+        return x2 <= nx1 || nx2 <= x1;
     }    
 }
