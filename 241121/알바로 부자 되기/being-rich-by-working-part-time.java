@@ -11,7 +11,8 @@ class Job implements Comparable<Job>{
     }
 
     public int compareTo(Job b){
-        return this.e - b.e;
+        if (this.s == b.s) return this.e - b.e;
+        return this.s - b.s;
     }
 }
 
