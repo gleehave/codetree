@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Job {
+class Job implements Comparable<Job>{
     int s, e, p;
 
     public Job(int s, int e, int p){
@@ -10,10 +10,10 @@ class Job {
         this.p = p;
     }
 
-    // public int compareTo(Job b){
-    //     if (this.s == b.s) return this.e - b.e;
-    //     return this.s - b.s;
-    // }
+    public int compareTo(Job b){
+        if (this.s == b.s) return this.e - b.e;
+        return this.s - b.s;
+    }
 }
 
 
@@ -38,20 +38,18 @@ public class Main {
                 Integer.parseInt(st.nextToken()),
                 Integer.parseInt(st.nextToken())                          
             );
-            dp[i] = Integer.MIN_VALUE;
+            dp[i] = 0;
         }
 
-        // Arrays.sort(job);
-
+        Arrays.sort(job);
 
         dp[0] = job[0].p;
         for(int i=1; i<n; i++){
             for(int j=0; j<i; j++){
                 if (inRange(job[i], job[j])){
-                    dp[i] = Math.max(dp[i], job[j].p + dp[i]);
+                    dp[i] = Math.max(job[i].p, dp[j] + job[i].p);
                 }
             }
-
             dp[i] = Math.max(dp[i], job[i].p);
         }
 
@@ -61,7 +59,7 @@ public class Main {
     }
 
     public static boolean inRange(Job now, Job previous){
-        if (now.s <= previous.e) return false;
-        return true;
+        if (now.s <= previous.e) return false; // 겹친다.
+        return true; // 겹치지 않는다.
     }
 }
