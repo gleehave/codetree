@@ -11,8 +11,10 @@ class Job implements Comparable<Job>{
     }
 
     public int compareTo(Job b){
-        if (this.s == b.s) return this.e - b.e;
-        return this.s - b.s;
+        return this.e - b.e;
+
+        // if (this.s == b.s) return this.e - b.e;
+        // return this.s - b.s;
     }
 }
 
@@ -42,12 +44,11 @@ public class Main {
         }
 
         Arrays.sort(job);
-
         dp[0] = job[0].p;
         for(int i=1; i<n; i++){
             for(int j=0; j<i; j++){
                 if (inRange(job[i], job[j])){
-                    dp[i] = Math.max(job[i].p, dp[j] + job[i].p);
+                    dp[i] = Math.max(dp[i], dp[j] + job[i].p);
                 }
             }
             dp[i] = Math.max(dp[i], job[i].p);
