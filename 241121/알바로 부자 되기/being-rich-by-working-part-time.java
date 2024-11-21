@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Job implements Comparable<Job>{
+class Job {
     int s, e, p;
 
     public Job(int s, int e, int p){
@@ -10,10 +10,10 @@ class Job implements Comparable<Job>{
         this.p = p;
     }
 
-    public int compareTo(Job b){
-        if (this.s == b.s) return this.e - b.e;
-        return this.s - b.s;
-    }
+    // public int compareTo(Job b){
+    //     if (this.s == b.s) return this.e - b.e;
+    //     return this.s - b.s;
+    // }
 }
 
 
@@ -41,7 +41,7 @@ public class Main {
             dp[i] = Integer.MIN_VALUE;
         }
 
-        Arrays.sort(job);
+        // Arrays.sort(job);
 
 
         dp[0] = job[0].p;
