@@ -36,7 +36,7 @@ public class Main {
                 }
             }
         }
-
-        System.out.println(dp[m]);
+        if (dp[m] == Integer.MIN_VALUE) System.out.println(-1);
+        else System.out.println(dp[m]); 
     }
 }
