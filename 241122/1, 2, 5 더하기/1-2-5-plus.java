@@ -29,7 +29,7 @@ public class Main {
             // 가짓수를 더해줍니다.
             for(int j = 0; j < MAX_M; j++) {
                 if(i >= numbers[j])
-                    dp[i] = dp[i - numbers[j]] % MOD;
+                    dp[i] = (dp[i] + dp[i - numbers[j]]) % MOD;
             }
         }
 
