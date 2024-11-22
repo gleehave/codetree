@@ -17,12 +17,13 @@ public class Main {
         }
         System.out.println(Arrays.toString(dp));
 
-        for(int i=1; i<=n; i++){
-
-            for(int j=1; j<=3; j++){
-                if ()
+        // DP 배열 업데이트
+        for (int number : num) {
+            for (int i = number; i <= n; i++) {
+                dp[i] += dp[i - number];
             }
         }
+
         System.out.println(Arrays.toString(dp));
     }
 }
