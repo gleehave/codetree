@@ -21,16 +21,21 @@ public class Main {
         }
 
         dp = new int[totalSum+1];
+        for(int i=1; i<=totalSum; i++){
+            dp[i] = Integer.MIN_VALUE;
+        }
 
         for(int i=0; i<n; i++){
             for(int j=totalSum; j>=0; j--){
                 if (j - arr[i] < 0) continue;
+                if (dp[j - arr[i]] == Integer.MIN_VALUE) continue;
                 dp[j] = Math.max(dp[j], dp[j - arr[i]] + 1);
             }
         }
-        
+
         int total = Integer.MAX_VALUE;
         for(int i=1; i<=totalSum; i++){
+            if (dp[i] == Integer.MIN_VALUE) continue; 
             total = Math.min(total, Math.abs(Math.abs(totalSum - i) - i));
         }
         System.out.println(total);   
