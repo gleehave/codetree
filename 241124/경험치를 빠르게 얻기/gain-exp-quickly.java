@@ -41,7 +41,7 @@ public class Main {
             }
         }
 
-        System.out.println(Arrays.toString(dp));
+        
         
         int ans = Integer.MIN_VALUE;
         for(int t: dp) ans = Math.max(ans, t);
