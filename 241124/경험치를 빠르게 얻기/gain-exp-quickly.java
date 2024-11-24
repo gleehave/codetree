@@ -35,9 +35,9 @@ public class Main {
         for(int i=1; i<=n; i++){
             dp[exp[i]] = time[i];
             for(int j=m; j>=0; j--){
-                if (j - exp[i] < 0) continue;
+                if (j - time[i] < 0) continue;
 
-                dp[j] = Math.max(dp[j], dp[j - exp[i]] + time[i]);
+                dp[j] = Math.max(dp[j], dp[j - time[i]] + time[i]);
             }
         }
 
@@ -45,6 +45,6 @@ public class Main {
         
         int ans = Integer.MIN_VALUE;
         for(int t: dp) ans = Math.max(ans, t);
-        System.out.println(ans);
+        System.out.println(ans-1);
     }
 }
