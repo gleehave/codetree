@@ -1,52 +1,45 @@
-import java.io.*;
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
-    static int n, k;
-    static int[] number;
+    public static final int MAXN = 100005;
+    public static final int INF = -1000000009;
+    public static int n, k;
+    public static int[] a = new int[MAXN];
+    public static int[][] dp = new int[MAXN][15];
 
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        // 입력 처리
-        st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        k = Integer.parseInt(st.nextToken());
-
-        number = new int[n + 1];
-        st = new StringTokenizer(br.readLine());
+        // n과 k 값을 입력받습니다.
+        n = sc.nextInt();
+        k = sc.nextInt();
+        // 보물 지도의 정보를 입력받습니다.
         for (int i = 1; i <= n; i++) {
-            number[i] = Integer.parseInt(st.nextToken());
+            a[i] = sc.nextInt();
         }
 
-        // DP 배열 및 변수 초기화
-        int[][] dp = new int[n + 1][k + 1]; // dp[i][j]: i번째까지 고려, j개의 음수 포함한 최대 합
-        for (int i = 0; i <= n; i++) {
-            Arrays.fill(dp[i], Integer.MIN_VALUE);
-        }
-        dp[0][0] = 0; // 아무 것도 선택하지 않았을 때 초기값
-
-        int maxSum = Integer.MIN_VALUE;
-
-        // DP 계산
+        // 동적 프로그래밍을 이용해 최대 합을 구합니다.
+        // dp[i][j] :: i번째 숫자를 마지막으로, 음수가 j번 나타났을 때 나타나는 연속합 중 최댓값
+        int ans = INF;
         for (int i = 1; i <= n; i++) {
-            for (int j = 0; j <= k; j++) {
-                // 현재 숫자를 선택하지 않는 경우
-                dp[i][j] = dp[i - 1][j];
-
-                // 현재 숫자를 선택하는 경우
-                if (number[i] >= 0) {
-                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j] + number[i]);
-                } else if (j > 0) {
-                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1] + number[i]);
+            // a[i]가 0 이상인 경우
+            if (a[i] >= 0) {
+                for (int j = 0; j <= k; j++) {
+                    dp[i][j] = Math.max(dp[i - 1][j] + a[i], dp[i][j]);
+                    ans = Math.max(ans, dp[i][j]);
                 }
-
-                // 최댓값 갱신
-                maxSum = Math.max(maxSum, dp[i][j]);
+            }
+            // a[i]가 음수인 경우
+            else {
+                // 최대 k개 까지만 음수가 나타날 수 있게 관리합니다.
+                for (int j = 1; j <= k; j++) {
+                    dp[i][j] = Math.max(dp[i - 1][j - 1] + a[i], dp[i][j]);
+                    ans = Math.max(ans, dp[i][j]);
+                }
             }
         }
 
-        System.out.println(maxSum);
+        // 최종 결과를 출력합니다.
+        System.out.println(ans);
     }
 }
