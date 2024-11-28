@@ -30,12 +30,10 @@ public class Main {
             if (count <= k){
                 dp[i] = Math.max(dp[i], dp[i-1] + number[i]);
             } else {
-                dp[i] = number[i];
+                dp[i] = number[i-1] + number[i];
                 count = 0;                
             }
         }
-
-        // System.out.println(Arrays.toString(dp));
 
         int max = Integer.MIN_VALUE;
         for(int num : dp){
