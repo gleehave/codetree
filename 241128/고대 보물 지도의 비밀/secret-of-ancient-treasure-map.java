@@ -4,7 +4,6 @@ import java.util.*;
 public class Main {
     static int n, k;
     static int[] number;
-    static int[] dp;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,34 +15,36 @@ public class Main {
         k = Integer.parseInt(st.nextToken());
 
         number = new int[n + 1];
-        dp = new int[n + 1];
-
         st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= n; i++) {
             number[i] = Integer.parseInt(st.nextToken());
         }
 
-        // DP 배열 초기화
-        Arrays.fill(dp, Integer.MIN_VALUE);
+        // DP 배열 및 변수 초기화
+        int[][] dp = new int[n + 1][k + 1]; // dp[i][j]: i번째까지 고려, j개의 음수 포함한 최대 합
+        for (int i = 0; i <= n; i++) {
+            Arrays.fill(dp[i], Integer.MIN_VALUE);
+        }
+        dp[0][0] = 0; // 아무 것도 선택하지 않았을 때 초기값
 
-        // 슬라이딩 윈도우 방식으로 음수 개수 추적
-        int count = 0;
         int maxSum = Integer.MIN_VALUE;
 
+        // DP 계산
         for (int i = 1; i <= n; i++) {
-            if (number[i] < 0) count++;
+            for (int j = 0; j <= k; j++) {
+                // 현재 숫자를 선택하지 않는 경우
+                dp[i][j] = dp[i - 1][j];
 
-            // 음수 개수가 k를 초과하지 않으면 dp 갱신
-            if (count <= k) {
-                dp[i] = Math.max(dp[i - 1] + number[i], number[i]);
-            } else {
-                // 음수 개수가 초과하면 새로 시작
-                dp[i] = number[i];
-                count = 1; // 현재 음수를 새로 포함
+                // 현재 숫자를 선택하는 경우
+                if (number[i] >= 0) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j] + number[i]);
+                } else if (j > 0) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1] + number[i]);
+                }
+
+                // 최댓값 갱신
+                maxSum = Math.max(maxSum, dp[i][j]);
             }
-
-            // 최댓값 갱신
-            maxSum = Math.max(maxSum, dp[i]);
         }
 
         System.out.println(maxSum);
