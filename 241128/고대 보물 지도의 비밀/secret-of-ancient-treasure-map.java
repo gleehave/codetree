@@ -30,7 +30,7 @@ public class Main {
             if (count <= k){
                 dp[i] = Math.max(dp[i], dp[i-1] + number[i]);
             } else {
-                dp[i] = number[i-1] + number[i];
+                dp[i] =  Math.max(number[i-1], number[i-1] + number[i]);
                 count = 0;                
             }
         }
