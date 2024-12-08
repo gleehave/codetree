@@ -1,48 +1,41 @@
 import java.util.Scanner;
 
 public class Main {
+    public static int n, m;
+    public static int[][] a = new int[1005][105];
+    public static int[][] dp = new int[1005][105];
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
+        // n과 m을 입력받습니다.
+        n = sc.nextInt();
+        m = sc.nextInt();
         
-        // 입력 처리
-        int n = sc.nextInt(); // 층의 수
-        int m = sc.nextInt(); // 방의 수
-        int[][] treasures = new int[n][m]; // 각 층의 보물 정보
-        
+        // 각 층의 보물의 개수 정보를 입력받습니다.
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++)
+                a[i][j] = sc.nextInt();
+        }
+
+        // 동적 프로그래밍을 사용하여 문제를 해결합니다.
+        // dp[i][j] :: i번째 층까지 올라왔고, 이번 층에서 j번째 방을 들어갔을 때 보물의 최대 개수
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                treasures[i][j] = sc.nextInt();
-            }
-        }
-        
-        // DP 테이블 초기화
-        int[][] dp = new int[n][m];
-        
-        // 첫 번째 층 초기화
-        for (int j = 0; j < m; j++) {
-            dp[0][j] = treasures[0][j];
-        }
-        
-        // DP 점화식 계산
-        for (int i = 1; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                int maxPrev = 0;
-                for (int k = 0; k < m; k++) {
-                    if (k != j) { // 같은 방을 연속으로 선택할 수 없음
-                        maxPrev = Math.max(maxPrev, dp[i - 1][k]);
-                    }
+            for (int j = 1; j <= m; j++) {
+                for (int k = 1; k <= m; k++) {
+                    if (j == k) continue; // 이전 층에서 갔던 방과 똑같은 번호의 방을 들어갈 수 없습니다.
+                    dp[i + 1][k] = Math.max(dp[i + 1][k], dp[i][j] + a[i + 1][k]);
                 }
-                dp[i][j] = maxPrev + treasures[i][j];
             }
         }
-        
-        // 마지막 층에서 최댓값 계산
-        int maxTreasure = 0;
-        for (int j = 0; j < m; j++) {
-            maxTreasure = Math.max(maxTreasure, dp[n - 1][j]);
+
+        // 최대 효율을 계산합니다.
+        int ans = 0;
+        for (int j = 1; j <= m; j++) {
+            ans = Math.max(ans, dp[n][j]);
         }
-        
-        // 결과 출력
-        System.out.println(maxTreasure);
+
+        // 최대 효율을 출력합니다.
+        System.out.println(ans);
     }
 }
