@@ -24,11 +24,11 @@ public class Main {
             }
         }
 
-        Queue<int[]> queue = new LinkedList<>(new Comparator<int[]>(){
+        PriorityQueue<int[]> queue = new PriorityQueue<>(new Comparator<int[]>(){
             @Override
             public int compare(int[] a, int[] b){
                 if (a[1] == b[1]) return b[0] - a[0];
-                return a[1] - b[1];
+                return b[1] - a[1];
             }
         });
 
@@ -36,9 +36,9 @@ public class Main {
             queue.offer(new int[]{key, map.get(key)});
         }
 
-        // Collections.sort(queue);
-        for(int[] d: queue){
-            System.out.println(d[0] +" " + d[1]);
+        for(int i=0; i<k; i++){
+            int[] res = queue.poll();
+            System.out.print(res[0]+" ");
         }
     }
 }
