@@ -45,7 +45,7 @@ public class Main {
 
                  if (count.containsKey(diff)) ans += count.get(diff);
         
-                 if (!count.containsKey(arr[i])) count.put(arr[i], 0);
+                 if (!count.containsKey(arr[i])) count.put(arr[i], 1);
                   else count.put(arr[i], count.get(arr[i]) + 1);
             }
         }
