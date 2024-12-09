@@ -1,54 +1,42 @@
-/*
-for(1-N){
-    now = arr[i];
-    count = new HashMap<>();
-
-    for(j=i+1; j<N; j++){
-        Long diff = now + arr[j];
-
-        if (count.containsKey(diff)) ans += count.get(diff);
-        
-        if (!count.containsKey(arr[i])) count.put(arr[i], 1);
-        else count.put(arr[i], count.get(arr[i]) + 1);
-    }
-}
-*/
-
 import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int n, k;
-    static long[] arr;
-    static Map<Long, Integer> count;
-
-    public static void main(String[] args) throws Exception {
-        StringTokenizer st;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
+        // 입력 처리
         st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        k = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
 
+        long[] arr = new long[n];
         st = new StringTokenizer(br.readLine());
-        arr = new long[n];
-        for(int i=0; i<n; i++){
+        for (int i = 0; i < n; i++) {
             arr[i] = Long.parseLong(st.nextToken());
         }
 
+        // 결과 값
         int ans = 0;
-        count = new HashMap<>();
-        for(int i=0; i<n; i++){
+        for (int i = 0; i < n; i++) {
             long now = arr[i];
-            for(int j=i+1; j<n; j++){
-                Long diff = now + arr[j];
+            Map<Long, Integer> count = new HashMap<>();
 
-                 if (count.containsKey(diff)) ans += count.get(diff);
-        
-                 if (!count.containsKey(arr[i])) count.put(arr[i], 1);
-                  else count.put(arr[i], count.get(arr[i]) + 1);
+            for (int j = i + 1; j < n; j++) {
+                long diff = k - now - arr[j];
+
+                // diff가 존재하면 카운트 증가
+                if (count.containsKey(diff)) {
+                    ans += count.get(diff);
+                }
+
+                // arr[j]를 count에 추가
+                count.put(arr[j], count.getOrDefault(arr[j], 0) + 1);
             }
         }
+
+        // 결과 출력
         System.out.println(ans);
     }
 }
