@@ -22,7 +22,7 @@ public class Main {
         }
 
         if (count == 0) System.out.println("None");
-        else if (count == 1){
+        else if (count >= 1){
             for(char key : map.keySet()){
                 if (map.get(key) == 1){
                     System.out.println(key);
