@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Main {
     static int n;
-    static Map<Integer, List<Integer>> map = new HashMap<>();
+    static Map<Long, List<Long>> map = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
         StringTokenizer st;
@@ -12,8 +12,8 @@ public class Main {
         n = Integer.parseInt(br.readLine());
         for(int i=0; i<n; i++){
             st = new StringTokenizer(br.readLine());
-            int x = Integer.parseInt(st.nextToken());
-            int y = Integer.parseInt(st.nextToken());
+            long x = Long.parseLong(st.nextToken());
+            long y = Long.parseLong(st.nextToken());
             
             if (map.containsKey(x)){
                 map.get(x).add(y);
@@ -23,11 +23,12 @@ public class Main {
             }
         }
 
-        int sum = 0;
-        for(int key : map.keySet()){
+        long sum = 0;
+        for(long key : map.keySet()){
             Collections.sort(map.get(key));
             sum += map.get(key).get(0);
         }
+
         System.out.println(sum);
     }
 }
