@@ -24,7 +24,6 @@ public class Main {
         } else if (one.size() == 0){
             System.out.println("None");
         } else {
-            Collections.sort(one);
             char res = (char) ('a' + one.get(0));
             System.out.println(res);
         }
