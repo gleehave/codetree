@@ -1,68 +1,58 @@
-/*
-M이 최대 50개면, 50개 중에 3개를 뽑는다. 
-선택된 3개의 열을 대상으로 집합 A, 집합 B에 대해서 넣어보자.
-만약 서로 같은게 없으면 조합+1, 그렇지 않으면 Fail
-*/
-
-import java.io.*;
-import java.util.*;
+import java.util.Scanner;
+import java.util.HashSet;
 
 public class Main {
-    static int n, m;
-    static String[][] map;
-    static HashSet<String> aSet = new HashSet<>();
-    static HashSet<String> bSet = new HashSet<>();
+    public static final int MAX_N = 500;
     
-    public static void main(String[] args) throws Exception {
-        StringTokenizer st;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-
-        map = new String[2 * n][m];
-        for(int i=0; i<2*n; i++){
-            String[] data = br.readLine().split("");
-            for(int j=0; j<m; j++){
-                map[i][j] = data[j];
-            }
+    // 변수 선언
+    public static int n, m;
+    public static int ans;
+    public static String[] A = new String[MAX_N];
+    public static String[] B = new String[MAX_N];
+    public static HashSet<String> s = new HashSet<>();
+    
+    public static boolean testLocation(int x, int y, int z) {
+        // x, y, z번째 자릿수를 선택했을 때 A와 B 그룹이
+        // 완벽하게 구분되면 true, 그렇지 않다면 false를 반환합니다.
+        s = new HashSet<>();
+    
+        // A의 원소를 전부 HashSet에 넣어줍니다.
+        for(int i = 0; i < n; i++) {
+            s.add(A[i].substring(x, x + 1) + A[i].substring(y, y + 1) + A[i].substring(z, z + 1));
         }
-
-        int count = 0;
-        for(int i=0; i<m; i++){
-            for(int j=i+1; j<m; j++){
-                for(int k=j+1; k<m; k++){
-                    
-                    afind(i, j, k);
-                    bfind(i, j, k);
-
-                    boolean available = true;
-                    for(String aWord : aSet){
-                        if (bSet.contains(aWord)){
-                            available = false;
-                            break;
-                        }
-                    }
-                    if (available) count++;
-                }
-            }
+    
+        // B의 원소 중 하나라도 A와 같은 경우가 있다면
+        // A와 B를 구분해낼 수 없습니다.
+        for(int i = 0; i < n; i++) {
+            if(s.contains(B[i].substring(x, x + 1) + B[i].substring(y, y + 1) + B[i].substring(z, z + 1)))
+                return false;
         }
-        System.out.println(count);
-
-    } // main
-
-    public static void afind(int i, int j, int k){
-        aSet = new HashSet<>();
-        for(int r=0; r<n; r++){
-            aSet.add(map[r][i]+map[r][j]+map[r][k]);
-        }
+    
+        // 모든 B의 원소가 A와 다르다면 A와 B를 구분해낼 수 있습니다.
+        return true;
     }
 
-    public static void bfind(int i, int j, int k){
-        bSet = new HashSet<>();
-        for(int r=n; r<2 * n; r++){
-            bSet.add(map[r][i]+map[r][j]+map[r][k]);
-        }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        // 입력:
+        n = sc.nextInt();
+        m = sc.nextInt();
+
+        for(int i = 0; i < n; i++)
+            A[i] = sc.next();
+        
+        for(int i = 0; i < n; i++)
+            B[i] = sc.next();
+
+        // 서로 다른 세 자리의 조합을 모두 순회합니다.
+        for (int i = 0; i < m; i++)
+            for (int j = i + 1; j < m; j++)
+                for (int k = j + 1; k < m; k++)
+                    // i, j, k 번째 자리를 선택했을 때 두 그룹을
+                    // 완벽하게 구분할 수 있는지 확인합니다.
+                    if (testLocation(i, j, k)) ans++;
+        
+        // 두 그룹을 구분해낼 수 있는 조합 수를 출력합니다.
+        System.out.print(ans);
     }
 }
