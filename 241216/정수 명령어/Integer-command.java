@@ -35,6 +35,12 @@ public class Main {
             
             if (!treeSet.isEmpty()){
                 System.out.println(treeSet.last() +" "+treeSet.first());
+
+                if (treeSet.size() == 1) treeSet.remove(treeSet.first());
+                else {
+                    treeSet.remove(treeSet.first());
+                    treeSet.remove(treeSet.last());                    
+                }
             } else {
                 System.out.println("EMPTY");
             }
