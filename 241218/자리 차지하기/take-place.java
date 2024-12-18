@@ -18,17 +18,20 @@ public class Main {
             treeSet.add(i);
         }
 
+        boolean isExist = false;
         int count = 0;
         st = new StringTokenizer(br.readLine());
         for(int i=0; i<n; i++){
             int chair = Integer.parseInt(st.nextToken());
             if (treeSet.floor(chair) == null){
                 System.out.println(count);
+                isExist = true;
                 break;
             }
             count++;
             treeSet.remove(treeSet.floor(chair));
         }
-        System.out.println(count);
+        if (!isExist) System.out.println(count);
+        
     }
 }
