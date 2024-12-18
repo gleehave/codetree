@@ -29,5 +29,6 @@ public class Main {
             count++;
             treeSet.remove(treeSet.floor(chair));
         }
+        System.out.println(count);
     }
 }
