@@ -22,12 +22,12 @@ public class Main {
 
         long result = Long.MAX_VALUE;
         for(long value : treeSet){
-            if (treeSet.lower(Math.abs(m - value)) == null){
+            if (treeSet.floor(Math.abs(m - value)) == null){
                 continue;
             }
 
-            if (m <= Math.abs(value - treeSet.lower(Math.abs(m - value)))){
-                result = Math.min(result, Math.abs(value - treeSet.lower(Math.abs(m - value))));
+            if (m <= Math.abs(value - treeSet.floor(Math.abs(m - value)))){
+                result = Math.min(result, Math.abs(value - treeSet.floor(Math.abs(m - value))));
             }
         }
 
