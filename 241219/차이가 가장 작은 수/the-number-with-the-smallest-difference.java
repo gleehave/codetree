@@ -3,8 +3,9 @@ import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 public class Main {
-    static int n, m;
-    static TreeSet<Integer> treeSet = new TreeSet<>();
+    static int n; 
+    static long m;
+    static TreeSet<Long> treeSet = new TreeSet<>();
 
     public static void main(String[] args) throws Exception {
         StringTokenizer st;
@@ -12,15 +13,15 @@ public class Main {
 
         st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
+        m = Long.parseLong(st.nextToken());
 
         for(int i=0; i<n; i++){
             st = new StringTokenizer(br.readLine());
-            treeSet.add(Integer.parseInt(st.nextToken()));
+            treeSet.add(Long.parseLong(st.nextToken()));
         }
 
-        int result = Integer.MAX_VALUE;
-        for(int value : treeSet){
+        long result = Long.MAX_VALUE;
+        for(long value : treeSet){
             if (treeSet.lower(Math.abs(m - value)) == null){
                 continue;
             }
@@ -30,7 +31,7 @@ public class Main {
             }
         }
 
-        if (result == Integer.MAX_VALUE) System.out.println(-1);
+        if (result == Long.MAX_VALUE) System.out.println(-1);
         else System.out.println(result);
     } // main
 }
