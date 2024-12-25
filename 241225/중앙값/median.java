@@ -7,17 +7,14 @@ public class Main {
         int t = Integer.parseInt(br.readLine()); // 테스트 케이스 개수
         while (t-- > 0) {
             int m = Integer.parseInt(br.readLine()); // 수열의 크기
-            StringTokenizer st = null;
+            StringTokenizer st;
             StringBuilder result = new StringBuilder();
             // 힙 초기화
             PriorityQueue<Integer> leftHeap = new PriorityQueue<>(Collections.reverseOrder()); // 최대 힙
             PriorityQueue<Integer> rightHeap = new PriorityQueue<>(); // 최소 힙
             
+            st = new StringTokenizer(br.readLine());
             for (int i = 1; i <= m; i++) {
-                if (i % 10 == 1) { // 새로운 줄 입력
-                    st = new StringTokenizer(br.readLine());
-                }
-
                 int num = Integer.parseInt(st.nextToken());
 
                 // 최대 힙과 최소 힙 관리
