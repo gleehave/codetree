@@ -7,7 +7,7 @@ public class Main {
         int t = Integer.parseInt(br.readLine()); // 테스트 케이스 개수
         while (t-- > 0) {
             int m = Integer.parseInt(br.readLine()); // 수열의 크기
-            StringTokenizer st;
+            StringTokenizer st = null;
             StringBuilder result = new StringBuilder();
             // 힙 초기화
             PriorityQueue<Integer> leftHeap = new PriorityQueue<>(Collections.reverseOrder()); // 최대 힙
