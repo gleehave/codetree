@@ -1,56 +1,64 @@
 import java.io.*;
 import java.util.*;
-import java.util.PriorityQueue;
-
-class Combination implements Comparable<Combination>{
-    int a, b;
-
-    public Combination(int a, int b){
-        this.a = a;
-        this.b = b;
-    }
-
-    @Override
-    public int compareTo(Combination other){
-        return (this.a + this.b) - (other.a + other.b);
-    }
-}
 
 public class Main {
 
-    static int n, m, k;
-    static List<Combination> combinations = new ArrayList<>();
-    static PriorityQueue<Integer> pqa = new PriorityQueue<>();
-    static PriorityQueue<Integer> pqb = new PriorityQueue<>();    
+    static class Pair implements Comparable<Pair> {
+        int sum, i, j;
 
+        public Pair(int sum, int i, int j) {
+            this.sum = sum;
+            this.i = i;
+            this.j = j;
+        }
+
+        @Override
+        public int compareTo(Pair other) {
+            return Integer.compare(this.sum, other.sum);
+        }
+    }
 
     public static void main(String[] args) throws Exception {
-        StringTokenizer st;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
+
+        int[] arr1 = new int[n];
+        int[] arr2 = new int[m];
 
         st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        k = Integer.parseInt(st.nextToken())-1;
-
-        st = new StringTokenizer(br.readLine());
-        for(int i=0; i<n; i++){
-            pqa.offer(Integer.parseInt(st.nextToken()));
+        for (int i = 0; i < n; i++) {
+            arr1[i] = Integer.parseInt(st.nextToken());
         }
 
         st = new StringTokenizer(br.readLine());
-        for(int i=0; i<m; i++){
-            pqb.offer(Integer.parseInt(st.nextToken()));
+        for (int i = 0; i < m; i++) {
+            arr2[i] = Integer.parseInt(st.nextToken());
         }
 
-        for(int aNum : pqa){
-            for(int bNum:pqb){                
-                combinations.add(new Combination(aNum, bNum));
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+
+        for (int i = 0; i < n; i++) {
+            pq.offer(new Pair(arr1[i] + arr2[0], i, 0));
+        }
+
+        int result = 0;
+        for (int t = 0; t < k; t++) {
+            Pair current = pq.poll();
+            result = current.sum;
+            int i = current.i, j = current.j;
+
+            if (j + 1 < m) {
+                pq.offer(new Pair(arr1[i] + arr2[j + 1], i, j + 1));
             }
         }
 
-        Collections.sort(combinations);
-        System.out.println(combinations.get(k).a + combinations.get(k).b);
-
+        System.out.println(result);
     }
 }
