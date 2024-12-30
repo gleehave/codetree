@@ -40,6 +40,7 @@ public class Main {
             if (i.next != null) System.out.println(i.next.data+" ");
             else System.out.print(0+" ");
         }
+        System.out.println();
     }
 
     static int n, q;
@@ -82,7 +83,7 @@ public class Main {
                     break;                                                            
             }
         } // while
-        System.out.println();
+
         for(Integer key : map.keySet()){
             if (map.get(key).next != null) System.out.print(map.get(key).next.data+" ");
             else System.out.print(0+" ");
