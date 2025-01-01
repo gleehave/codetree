@@ -9,8 +9,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int n = sc.nextInt(); // 초기 노드 개수
-        int k = sc.nextInt(); // 리스트 개수
+        int n = sc.nextInt(); // 노드의 개수
+        int k = sc.nextInt(); // 연결 리스트의 개수
 
         // LinkedList 초기화
         for (int i = 1; i <= k; i++) {
@@ -30,13 +30,13 @@ public class Main {
             int j = sc.nextInt();
 
             if (type == 1) {
-                // i번 리스트에서 맨 앞 원소를 j번 리스트의 맨 뒤로 이동
+                // i번 리스트의 맨 앞 원소를 j번 리스트의 맨 뒤로 이동
                 if (!lists[i].isEmpty()) {
                     int value = lists[i].removeFirst();
                     lists[j].addLast(value);
                 }
             } else if (type == 2) {
-                // i번 리스트에서 맨 뒤 원소를 j번 리스트의 맨 앞으로 이동
+                // i번 리스트의 맨 뒤 원소를 j번 리스트의 맨 앞으로 이동
                 if (!lists[i].isEmpty()) {
                     int value = lists[i].removeLast();
                     lists[j].addFirst(value);
@@ -46,7 +46,7 @@ public class Main {
                 if (!lists[i].isEmpty()) {
                     LinkedList<Integer> temp = new LinkedList<>(lists[i]);
                     lists[i].clear(); // i번 리스트를 비움
-                    temp.addAll(lists[j]); // i번 리스트를 j번 앞에 추가
+                    temp.addAll(lists[j]); // i번 리스트를 j번 리스트의 맨 앞에 추가
                     lists[j] = temp; // 새로운 j번 리스트로 설정
                 }
             } else if (type == 4) {
@@ -58,9 +58,10 @@ public class Main {
             }
         }
 
-        // 각 리스트의 원소 출력
+        // 각 리스트 출력
         for (int i = 1; i <= k; i++) {
-            System.out.print(lists[i].size());
+            int cnt = lists[i].size(); // 리스트의 크기
+            System.out.print(cnt);
             for (int value : lists[i]) {
                 System.out.print(" " + value);
             }
