@@ -9,8 +9,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int n = sc.nextInt();
-        int k = sc.nextInt();
+        int n = sc.nextInt(); // 초기 노드 개수
+        int k = sc.nextInt(); // 리스트 개수
 
         // LinkedList 초기화
         for (int i = 1; i <= k; i++) {
@@ -22,7 +22,7 @@ public class Main {
             lists[1].add(i);
         }
 
-        int q = sc.nextInt();
+        int q = sc.nextInt(); // 쿼리 개수
 
         for (int t = 0; t < q; t++) {
             int type = sc.nextInt();
